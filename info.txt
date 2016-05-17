@@ -1,0 +1,21 @@
+Description of data:
+http://www.football-data.co.uk/notes.txt
+
+Data Infos for the project:
+England 93/94 (match stats from 00/01 on + referees)
+Germany 93/94 (match stats from 00/01 on - but not 02/03)
+Italy 93/94 (match stats from 05/06 on + referees)
+- no attendance, no HO, no AO
+Spain 93/94 (match stats from 05/06)
+- no attendance, no referees, no HO, no AO
+France 93/94 (match stats from 05/06) 
+- no attendance, no referees, no HO, no AO
+Netherlands 94/95 (no match stats)
+- no match stats at all
+Portugal 94/95 (no match stats)
+- no match stats at all
+Turkey 94/95 (no match stats)
+- no match stats at all 
+
+For further infos look into the description of the data:
+http://www.football-data.co.uk/data.php
