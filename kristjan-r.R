@@ -134,3 +134,18 @@ axis(side=1, at=homeFoulsDE[,1],labels=seasonsDE)
 ## Conlusions
 ## England has lower foul rates and away team usually commits more fouls - not in La Liga.
 ## Bundesliga has the biggest cap between home and away. Number of fouls is decreasing overall
+
+
+## REFEREES
+library(plyr)
+aggregate(x ~ Year + Month, data = df, FUN = length)
+homeYellow = aggregate(HY~Referee, data=englandData, sum)
+awayYellow = aggregate(AY~Referee, data=englandData, sum)
+refGames = count(englandData, "Referee")
+homeYellow
+awayYellow
+englandData[englandData=="\xa0A Wiley"]<-"A Wiley"
+merged <- merge(homeYellow,awayYellow,by="Referee")
+merged <- merge(merged, refGames, by="Referee")
+merged = aggregate(HY + AY ~ Referee, mean, data=merged)
+## Mike Dean 643+28+8+7+1 HomeYellows, 691+29+16+9+2 AwayYellows - 367+18+7+6+1 Games
