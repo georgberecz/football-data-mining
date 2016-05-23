@@ -116,7 +116,7 @@ lines(awayFoulsIT,col="green", type="o")
 legend("topright", inset=.05,
        c("Away","Home"),fill=c("green", "red"), horiz=FALSE, bty = "n")
 axis(side=1, at=homeFoulsIT[,1],labels=seasonsIT)
-plot(homeFoulsEN,type = "o", main="Premiership",
+plot(homeFoulsEN,type = "o", main="Premier League",
      xaxt = "n", frame = FALSE, col = "red", ylim=c(9, 22), ylab="Fouls", xlab = "Season")
 lines(awayFoulsEN,col="green", type="o")
 legend("topright", inset=.05,
@@ -141,11 +141,67 @@ library(plyr)
 aggregate(x ~ Year + Month, data = df, FUN = length)
 homeYellow = aggregate(HY~Referee, data=englandData, sum)
 awayYellow = aggregate(AY~Referee, data=englandData, sum)
+homeRed = aggregate(HR~Referee, data=englandData, sum)
+awayRed = aggregate(AR~Referee, data=englandData, sum)
 refGames = count(englandData, "Referee")
 homeYellow
 awayYellow
-englandData[englandData=="\xa0A Wiley"]<-"A Wiley"
+englandData[englandData=="\xa0D Gallagher"]<-"D Gallagher"
+mergedRed <- merge(homeRed,awayRed,by="Referee")
+mergedRed <- merge(mergedRed, refGames, by="Referee")
 merged <- merge(homeYellow,awayYellow,by="Referee")
 merged <- merge(merged, refGames, by="Referee")
-merged = aggregate(HY + AY ~ Referee, mean, data=merged)
+merged = aggregate(HY, AY ~ Referee, mean, data=merged)
 ## Mike Dean 643+28+8+7+1 HomeYellows, 691+29+16+9+2 AwayYellows - 367+18+7+6+1 Games
+
+## Mike Dean 687 HomeYellows, 747 Away Yellows, 399 Games
+## Phil Dowd 443 HomeYellows, 643 Away Yellows, 306 Games
+## Howard Webb 427 HomeYellows, 555 AwayYellows, 297 Games
+## Martin Atkinson 433 HomeYellows, 568 AwayYellows, 292 Games
+## Mark Clattenburg 395 HomeYellows,486 AwayYellows, 271 Games
+## Chris Foy 303 HomeYellows, 413 AwayYellow, 262 Games
+## Andre Marriner 329 HomeYellws, 427 AwayYellow, 228 Games
+## Mark Halsey 228 HomeYellws, 348 AwayYellow, 265 Games
+## Alan Wiley 351 HomeYellws, 417 AwayYellow, 253 Games
+## Steve Bennet 343 HomeYellows, 482 AwayYellow, 243 Games
+## Lee Mason 277 HomeYellows, 351 AwayYellow, 204 Games
+## Rob Styles 310 HomeYellows, 462 AwayYellow , 211 Games
+
+## Referees with over 200 games
+dean = c(687, 747, 30, 52, 399)
+dowd = c(443, 643,24,43,306)
+webb = c(427, 555,12,21, 297)
+atkinson = c(433, 568,23,26, 292) 
+clattenburg = c(395, 486,28,16, 271)
+foy = c(303, 413,10,28,262)
+marriner = c(329,427,15,30,228)
+halsey = c(228, 348,14,17, 265)
+wiley = c(351, 417,11,21,253)
+bennet = c(343,482,15,37,243)
+mason = c(277, 351,10,23,204)
+styles = c(310, 462,22,33, 211)
+
+referees = data.frame(dean, dowd, webb, atkinson, clattenburg, foy, marriner, halsey, wiley, bennet, mason, styles)
+referees = data.frame(t(referees))
+colnames(referees) <- c("Home Yellows","Away Yellows", "Home Reds", "Away Reds", "Games")
+
+referees$HYperGame <- referees$`Home Yellows` / referees$Games
+referees$AYperGame <- referees$`Away Yellows` / referees$Games
+referees$AYHYRatio <- referees$AYperGame / referees$HYperGame
+referees$HRperGame <- referees$`Home Reds` / referees$Games
+referees$ARperGame <- referees$`Away Reds` / referees$Games
+referees$ARHRRatio <- referees$ARperGame / referees$HRperGame
+referees$totalCards <- referees$`Home Yellows` + referees$`Away Yellows` + referees$`Home Reds` + referees$`Away Reds`
+referees$toralCardsPerGame <- referees$totalCards / referees$Games
+referees$totalYellow <- referees$`Home Yellows` + referees$`Away Yellows`
+referees$totalRed <- referees$`Home Reds` + referees$`Away Reds`
+referees$redToYellow <- referees$totalRed / referees$totalYellow
+## END OF REFEREES
+
+
+## START OF CORNERS
+
+englandData$HomeCornersToAwayCorners <- englandData$HC - englandData$AC
+
+## END OF CORNERS
+
