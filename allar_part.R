@@ -287,3 +287,77 @@ all_leagues_home_lose_draw <- all_leagues_home_HTR_lose_draw / nrow(test)
 all_leagues_draw_draw <- all_leagues_home_HTR_draw_draw / nrow(test)
 all_leagues_draw_away <- all_leagues_draw_away_win / nrow(test)
 all_leagues_draw_home <- all_leagues_draw_home_win / nrow(test)
+##Some pie plot here with ggplot
+bar_to_plot <- data.frame(Game_outcome_prob=c(all_leagues_home_win_win,all_leagues_home_win_lose,
+                                              all_leagues_home_win_draw, all_leagues_home_lose_win,
+                                              all_leagues_home_lose_lose, all_leagues_home_lose_draw,
+                                              all_leagues_draw_draw,all_leagues_draw_away,
+                                              all_leagues_draw_home),
+                          Names_of_prob=c("Home win ","Home lose","Home draw","Away win",
+                                          "Away lost", "Away draw", "Draw","Away win from draw",
+                                          "Home win from draw"))
+
+game_outcome_barp <- ggplot(bar_to_plot, mapping = aes(x="", y=Game_outcome_prob, fill=Names_of_prob))+
+  geom_bar(width = 1,stat = "identity")
+game_outcome_piep <- game_outcome_barp + coord_polar("y", start = 0)
+game_outcome_piep
+###
+##Now two plots for seeing the outcome from leading at halftime:
+#For home team
+home_bar_to_plot <- data.frame(Game_outcome_prob=c(all_leagues_home_win_win,all_leagues_home_win_lose,
+                                                   all_leagues_home_win_draw),
+                               Outcome=c("Home win ","Home lose","Home draw"))
+
+home_outcome_barp <- ggplot(home_bar_to_plot, mapping = aes(x="", y=Game_outcome_prob, fill=Outcome))+
+  geom_bar(width = 1,stat = "identity")
+
+home_outcome_piep <- home_outcome_barp + coord_polar("y", start = 0) +ylab("Outcome from hometeam leading at halftime")
+home_outcome_piep + blank_theme + theme(axis.text.x=element_blank()) 
+###
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+###
+library(scales)
+home_outcome_piep + scale_fill_brewer("Probability") + blank_theme + theme(
+  axis.text.x=element_blank()) +geom_text(aes(y = Game_outcome_prob/3 + c(0, cumsum(Game_outcome_prob)[-length(Game_outcome_prob)]),
+                                              label=round(Game_outcome_prob,digits = 4))
+) + ggtitle("Probabilty of game outcome from home team leading at halftime")
+
+#For away team
+
+away_bar_to_plot <- data.frame(Game_outcome_prob=c(all_leagues_home_lose_lose,all_leagues_home_lose_win,
+                                                   all_leagues_home_lose_draw),
+                               Outcome=c("Away win ","Away lose","Away draw"))
+
+away_outcome_barp <- ggplot(away_bar_to_plot, mapping = aes(x="", y=Game_outcome_prob, fill=Outcome))+
+  geom_bar(width = 1,stat = "identity")
+
+away_outcome_piep <- away_outcome_barp + coord_polar("y", start = 0)
+away_outcome_piep + blank_theme + theme(axis.text.x=element_blank())
+##Do the card part
+#The probabilty of winning when scoring a red card
+
+
+#The probabilty of winning when scoring a yellow card
+
+
+#The probabilty of winning when scoring a card
+
+
+#The probabilty of losing when scoring a red card
+
+
+#The probabilty of losin when scoring a yellow card
+
+
+#The probabilty of losin when scoring a card
+
+
+
