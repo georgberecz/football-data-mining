@@ -387,12 +387,13 @@ spain_card_games<-spainData[!(is.na(spainData$AR)) & !(is.na(spainData$HR)),]
 games_with_cards <- smartbind(englad_card_games,france_card_games,germany_card_games,
                             italy_card_games, spain_card_games)
 
-per_of_games_won_with_red_card_for_winning_team <- (nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$FTR=='H',]) + nrow(games_with_cards[games_with_cards$AR>=1 & games_with_cards$FTR=='A',])) / nrow(games_with_cards)
-per_of_games_won_without_red_card_for_winning_team <- (nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$FTR=='H',]) + nrow(games_with_cards[games_with_cards$AR==0 & games_with_cards$FTR=='A',])) / nrow(games_with_cards)
-per_of_games_lost_with_red_card_for_losing_team <- (nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$FTR=='A',]) + nrow(games_with_cards[games_with_cards$AR>=1 & games_with_cards$FTR=='H',])) / nrow(games_with_cards)
-per_of_games_lost_without_red_card_for_losing_team <- (nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$FTR=='A',]) + nrow(games_with_cards[games_with_cards$AR==0 & games_with_cards$FTR=='H',])) / nrow(games_with_cards)
-per_of_games_drawn_with_red_card <- nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$AR>=1 & games_with_cards$FTR=='D',])  / nrow(games_with_cards)
-per_of_games_drawn_without_red_card <- nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$AR==0 & games_with_cards$FTR=='D',]) / nrow(games_with_cards)
+per_of_games_won_with_red_card_for_winning_team <- (nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$FTR=='H',]) + nrow(games_with_cards[games_with_cards$AR>=1 & games_with_cards$FTR=='A',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_won_without_red_card_for_winning_team <- (nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$FTR=='H',]) + nrow(games_with_cards[games_with_cards$AR==0 & games_with_cards$FTR=='A',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_lost_with_red_card_for_losing_team <- (nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$FTR=='A',]) + nrow(games_with_cards[games_with_cards$AR>=1 & games_with_cards$FTR=='H',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_lost_without_red_card_for_losing_team <- (nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$FTR=='A',]) + nrow(games_with_cards[games_with_cards$AR==0 & games_with_cards$FTR=='H',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_drawn_with_red_card_for_both <- nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$AR>=1 & games_with_cards$FTR=='D',])  / nrow(games_with_cards[games_with_cards$FTR=='D',])
+per_of_games_drawn_with_red_card <- nrow(games_with_cards[(games_with_cards$HR>=1 | games_with_cards$AR>=1) & games_with_cards$FTR=='D',])  / nrow(games_with_cards[games_with_cards$FTR=='D',])
+per_of_games_drawn_without_red_card <- nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$AR==0 & games_with_cards$FTR=='D',]) / nrow(games_with_cards[games_with_cards$FTR=='D',])
 
 ##### RULES part #####
 #Lets factorizie data
