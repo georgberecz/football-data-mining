@@ -2,7 +2,7 @@
 
 # Find average of 
 # HF = Home Team Fouls Committed & AF = Away Team Fouls Committed
-
+library(ggplot2)
 ## TOTALS
 
 # Germany - Foul data available from 00-01 season (02-03 missing)
@@ -325,53 +325,8 @@ referees$redToYellow <- referees$totalRed / referees$totalYellow
 
 
 ## START OF CORNERS
-# EN
-englandData$HomeCornersToAwayCorners <- englandData$HC - englandData$AC
-over15 <- englandData[ which(englandData$HomeCornersToAwayCorners>=15), ]
 
-table(over15$FTR) # Get count into table
-dfover15 <- data.frame(table(over15$FTR)) # Get count into dataframe
-
-over10 <- englandData[ which(englandData$HomeCornersToAwayCorners>=10
-                             & englandData$HomeCornersToAwayCorners<15), ]
-dfover10 <- data.frame(table(over10$FTR))
-
-over7 <- englandData[ which(englandData$HomeCornersToAwayCorners>=7
-                             & englandData$HomeCornersToAwayCorners<10), ]
-dfover7 <- data.frame(table(over7$FTR))
-
-over5 <- englandData[ which(englandData$HomeCornersToAwayCorners>=5
-                            & englandData$HomeCornersToAwayCorners<7), ]
-dfover5 <- data.frame(table(over5$FTR))
-
-over3 <- englandData[ which(englandData$HomeCornersToAwayCorners>=3
-                            & englandData$HomeCornersToAwayCorners<5), ]
-dfover3 <- data.frame(table(over3$FTR))
-
-over0 <- englandData[ which(englandData$HomeCornersToAwayCorners>=0
-                            & englandData$HomeCornersToAwayCorners<3), ]
-dfover0 <- data.frame(table(over0$FTR))
-
-minus3 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-3
-                            & englandData$HomeCornersToAwayCorners<0), ]
-dfminus3 <- data.frame(table(minus3$FTR))
-
-minus5 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-5
-                             & englandData$HomeCornersToAwayCorners<(-3)), ]
-dfminus5 <- data.frame(table(minus5$FTR))
-
-minus7 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-7
-                             & englandData$HomeCornersToAwayCorners<(-5)), ]
-dfminus7 <- data.frame(table(minus7$FTR))
-
-minus10 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-10
-                             & englandData$HomeCornersToAwayCorners<(-7)), ]
-dfminus10 <- data.frame(table(minus10$FTR))
-
-minus16 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-17
-                              & englandData$HomeCornersToAwayCorners<(-10)), ]
-dfminus16 <- data.frame(table(minus16$FTR))
-
+#Helper function
 calculateHDA <- function(all, aggregated) {
   rows = nrow(all)
   homePercentage = aggregated$Freq[aggregated$Var1=='H'] / rows
@@ -380,33 +335,105 @@ calculateHDA <- function(all, aggregated) {
   result <- c(homePercentage,drawPercentage,awayPercentage)
   return(result)
 }
+
+# EN
+englandData$HomeCornersToAwayCorners <- englandData$HC - englandData$AC
+EN_over15 <- englandData[ which(englandData$HomeCornersToAwayCorners>=15), ]
+
+#table(over15$FTR) # Get count into table
+EN_dfover15 <- data.frame(table(EN_over15$FTR)) # Get count into dataframe
+
+EN_over10 <- englandData[ which(englandData$HomeCornersToAwayCorners>=10
+                             & englandData$HomeCornersToAwayCorners<15), ]
+EN_dfover10 <- data.frame(table(EN_over10$FTR))
+
+EN_over7 <- englandData[ which(englandData$HomeCornersToAwayCorners>=7
+                             & englandData$HomeCornersToAwayCorners<10), ]
+EN_dfover7 <- data.frame(table(EN_over7$FTR))
+
+EN_over5 <- englandData[ which(englandData$HomeCornersToAwayCorners>=5
+                            & englandData$HomeCornersToAwayCorners<7), ]
+EN_dfover5 <- data.frame(table(EN_over5$FTR))
+
+EN_over3 <- englandData[ which(englandData$HomeCornersToAwayCorners>=3
+                            & englandData$HomeCornersToAwayCorners<5), ]
+EN_dfover3 <- data.frame(table(EN_over3$FTR))
+
+EN_over0 <- englandData[ which(englandData$HomeCornersToAwayCorners>=0
+                            & englandData$HomeCornersToAwayCorners<3), ]
+EN_dfover0 <- data.frame(table(EN_over0$FTR))
+
+EN_minus3 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-3
+                            & englandData$HomeCornersToAwayCorners<0), ]
+EN_dfminus3 <- data.frame(table(EN_minus3$FTR))
+
+EN_minus5 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-5
+                             & englandData$HomeCornersToAwayCorners<(-3)), ]
+EN_dfminus5 <- data.frame(table(EN_minus5$FTR))
+
+EN_minus7 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-7
+                             & englandData$HomeCornersToAwayCorners<(-5)), ]
+EN_dfminus7 <- data.frame(table(EN_minus7$FTR))
+
+EN_minus10 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-10
+                             & englandData$HomeCornersToAwayCorners<(-7)), ]
+EN_dfminus10 <- data.frame(table(EN_minus10$FTR))
+
+EN_minus16 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-17
+                              & englandData$HomeCornersToAwayCorners<(-10)), ]
+EN_dfminus16 <- data.frame(table(EN_minus16$FTR))
+
 my.list <- list(over15,dfover15,over10,dfover10,over7,dfover7,over5,dfover5,over3,dfover3,over0,dfover0,
                 minus3,dfminus3,minus5,dfminus5,minus7,dfminus7,minus10,dfminus10,minus16,dfminus16)
-resultado = calculateHDA(over15,dfover15)
-resultDF <- data.frame()
-colnames(resultDF) <- c("Home %", "Draw %", "Away%")
-rownames(resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
-resultDF <- rbind(resultDF, resultado)
-resultDF
-resultDF$groups <- rownames(resultDF)
-resultDF$groups <- as.character(resultDF$groups)
-resultDF$groups <- factor(resultDF$groups, levels=unique(resultDF$groups))
-library(ggplot2)
+EN_resultDF <- data.frame()
+runInEngland <- function() {
+  EN_resultDF <- data.frame()
+  EN_resultado = calculateHDA(EN_over15,EN_dfover15)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_over10,EN_dfover10)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_over7,EN_dfover7)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_over5,EN_dfover5)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_over3,EN_dfover3)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_over0,EN_dfover0)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_minus3,EN_dfminus3)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_minus5,EN_dfminus5)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_minus7,EN_dfminus7)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_minus10,EN_dfminus10)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  EN_resultado = calculateHDA(EN_minus16,EN_dfminus16)
+  EN_resultDF <- rbind(EN_resultDF, EN_resultado)
+  colnames(EN_resultDF) <- c("Home %", "Draw %", "Away%")
+  rownames(EN_resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+  EN_resultDF$groups <- rownames(EN_resultDF)
+  EN_resultDF$groups <- as.character(EN_resultDF$groups)
+  EN_resultDF$groups <- factor(EN_resultDF$groups, levels=unique(EN_resultDF$groups))
+  return(EN_resultDF)
+}
+EN_resultdf <- runInEngland()
+
 colorder <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
 ## GRAPH
-ggplot(data = resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+EN_corner <- ggplot(data = EN_resultdf,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
   geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
   geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
   geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
-  geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  #geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
   geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
-  geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  #geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
   geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
-  geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  #geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
   geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
   ggtitle("Probability of winning a game \ncompared to number of corners in England") +
   scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
-  scale_x_discrete(limits=colorder,labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+  scale_x_discrete(labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
                                             "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -499,28 +526,334 @@ runInSpain <- function() {
 }
 ES_resultDF <- runInSpain()
 
+
 ## GRAPH
-ggplot(data = ES_resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+ES_corners <- ggplot(data = ES_resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
   geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
   geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
   geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
-  geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  #geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
   geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
-  geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  #geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
   geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
-  geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  #geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
   geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
   ggtitle("Probability of winning a game \ncompared to number of corners in Spain") +
   scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
-  scale_x_discrete(limits=colorder,labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+  scale_x_discrete(labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
                                             "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ## END GRAPH
 
-
-
 # End ES
+
+# IT
+italyData$HomeCornersToAwayCorners <- italyData$HC - italyData$AC
+IT_over15 <- italyData[ which(italyData$HomeCornersToAwayCorners>=15), ]
+
+IT_dfover15 <- data.frame(table(IT_over15$FTR)) # Get count into dataframe
+
+IT_over10 <- italyData[ which(italyData$HomeCornersToAwayCorners>=10
+                              & italyData$HomeCornersToAwayCorners<15), ]
+IT_dfover10 <- data.frame(table(IT_over10$FTR))
+
+IT_over7 <- italyData[ which(italyData$HomeCornersToAwayCorners>=7
+                             & italyData$HomeCornersToAwayCorners<10), ]
+IT_dfover7 <- data.frame(table(IT_over7$FTR))
+
+IT_over5 <- italyData[ which(italyData$HomeCornersToAwayCorners>=5
+                             & italyData$HomeCornersToAwayCorners<7), ]
+IT_dfover5 <- data.frame(table(IT_over5$FTR))
+
+IT_over3 <- italyData[ which(italyData$HomeCornersToAwayCorners>=3
+                             & italyData$HomeCornersToAwayCorners<5), ]
+IT_dfover3 <- data.frame(table(IT_over3$FTR))
+
+IT_over0 <- italyData[ which(italyData$HomeCornersToAwayCorners>=0
+                             & italyData$HomeCornersToAwayCorners<3), ]
+IT_dfover0 <- data.frame(table(IT_over0$FTR))
+
+IT_minus3 <- italyData[ which(italyData$HomeCornersToAwayCorners>=-3
+                              & italyData$HomeCornersToAwayCorners<0), ]
+IT_dfminus3 <- data.frame(table(IT_minus3$FTR))
+
+IT_minus5 <- italyData[ which(italyData$HomeCornersToAwayCorners>=-5
+                              & italyData$HomeCornersToAwayCorners<(-3)), ]
+IT_dfminus5 <- data.frame(table(IT_minus5$FTR))
+
+IT_minus7 <- italyData[ which(italyData$HomeCornersToAwayCorners>=-7
+                              & italyData$HomeCornersToAwayCorners<(-5)), ]
+IT_dfminus7 <- data.frame(table(IT_minus7$FTR))
+
+IT_minus10 <- italyData[ which(italyData$HomeCornersToAwayCorners>=-10
+                               & italyData$HomeCornersToAwayCorners<(-7)), ]
+IT_dfminus10 <- data.frame(table(IT_minus10$FTR))
+
+IT_minus16 <- italyData[ which(italyData$HomeCornersToAwayCorners>=-17
+                               & italyData$HomeCornersToAwayCorners<(-10)), ]
+IT_dfminus16 <- data.frame(table(IT_minus16$FTR))
+
+#evaluate one by one
+runInItaly <- function() {
+  IT_resultDF <- data.frame()
+  IT_resultado = calculateHDA(IT_over15,IT_dfover15)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_over10,IT_dfover10)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_over7,IT_dfover7)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_over5,IT_dfover5)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_over3,IT_dfover3)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_over0,IT_dfover0)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_minus3,IT_dfminus3)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_minus5,IT_dfminus5)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_minus7,IT_dfminus7)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_minus10,IT_dfminus10)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  IT_resultado = calculateHDA(IT_minus16,IT_dfminus16)
+  IT_resultDF <- rbind(IT_resultDF, IT_resultado)
+  colnames(IT_resultDF) <- c("Home %", "Draw %", "Away%")
+  rownames(IT_resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+  IT_resultDF$groups <- rownames(IT_resultDF)
+  IT_resultDF$groups <- as.character(IT_resultDF$groups)
+  IT_resultDF$groups <- factor(IT_resultDF$groups, levels=unique(IT_resultDF$groups))
+  return(IT_resultDF)
+}
+IT_resultDF <- runInItaly()
+
+
+## GRAPH
+IT_corners <- ggplot(data = IT_resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+  geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
+  geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
+  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
+  #geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
+  #geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
+  #geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
+  ggtitle("Probability of winning a game \ncompared to number of corners in Italy") +
+  scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
+  scale_x_discrete(labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+                            "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+## END GRAPH
+
+# End IT
+
+# FR
+franceData$HomeCornersToAwayCorners <- franceData$HC - franceData$AC
+FR_over15 <- franceData[ which(franceData$HomeCornersToAwayCorners>=15), ]
+
+FR_dfover15 <- data.frame(table(FR_over15$FTR)) # Get count into dataframe
+
+FR_over10 <- franceData[ which(franceData$HomeCornersToAwayCorners>=10
+                              & franceData$HomeCornersToAwayCorners<15), ]
+FR_dfover10 <- data.frame(table(FR_over10$FTR))
+
+FR_over7 <- franceData[ which(franceData$HomeCornersToAwayCorners>=7
+                             & franceData$HomeCornersToAwayCorners<10), ]
+FR_dfover7 <- data.frame(table(FR_over7$FTR))
+
+FR_over5 <- franceData[ which(franceData$HomeCornersToAwayCorners>=5
+                             & franceData$HomeCornersToAwayCorners<7), ]
+FR_dfover5 <- data.frame(table(FR_over5$FTR))
+
+FR_over3 <- franceData[ which(franceData$HomeCornersToAwayCorners>=3
+                             & franceData$HomeCornersToAwayCorners<5), ]
+FR_dfover3 <- data.frame(table(FR_over3$FTR))
+
+FR_over0 <- franceData[ which(franceData$HomeCornersToAwayCorners>=0
+                             & franceData$HomeCornersToAwayCorners<3), ]
+FR_dfover0 <- data.frame(table(FR_over0$FTR))
+
+FR_minus3 <- franceData[ which(franceData$HomeCornersToAwayCorners>=-3
+                              & franceData$HomeCornersToAwayCorners<0), ]
+FR_dfminus3 <- data.frame(table(FR_minus3$FTR))
+
+FR_minus5 <- franceData[ which(franceData$HomeCornersToAwayCorners>=-5
+                              & franceData$HomeCornersToAwayCorners<(-3)), ]
+FR_dfminus5 <- data.frame(table(FR_minus5$FTR))
+
+FR_minus7 <- franceData[ which(franceData$HomeCornersToAwayCorners>=-7
+                              & franceData$HomeCornersToAwayCorners<(-5)), ]
+FR_dfminus7 <- data.frame(table(FR_minus7$FTR))
+
+FR_minus10 <- franceData[ which(franceData$HomeCornersToAwayCorners>=-10
+                               & franceData$HomeCornersToAwayCorners<(-7)), ]
+FR_dfminus10 <- data.frame(table(FR_minus10$FTR))
+
+FR_minus16 <- franceData[ which(franceData$HomeCornersToAwayCorners>=-17
+                               & franceData$HomeCornersToAwayCorners<(-10)), ]
+FR_dfminus16 <- data.frame(table(FR_minus16$FTR))
+
+runInFrance <- function() {
+  FR_resultDF <- data.frame()
+  FR_resultado = calculateHDA(FR_over15,FR_dfover15)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_over10,FR_dfover10)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_over7,FR_dfover7)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_over5,FR_dfover5)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_over3,FR_dfover3)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_over0,FR_dfover0)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_minus3,FR_dfminus3)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_minus5,FR_dfminus5)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_minus7,FR_dfminus7)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_minus10,FR_dfminus10)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  FR_resultado = calculateHDA(FR_minus16,FR_dfminus16)
+  FR_resultDF <- rbind(FR_resultDF, FR_resultado)
+  colnames(FR_resultDF) <- c("Home %", "Draw %", "Away%")
+  rownames(FR_resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+  FR_resultDF$groups <- rownames(FR_resultDF)
+  FR_resultDF$groups <- as.character(FR_resultDF$groups)
+  FR_resultDF$groups <- factor(FR_resultDF$groups, levels=unique(FR_resultDF$groups))
+  return(FR_resultDF)
+}
+FR_resultDF <- runInFrance()
+
+
+## GRAPH
+FR_corners <- ggplot(data = FR_resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+  geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
+  geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
+  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
+  #geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
+  #geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
+  #geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
+  ggtitle("Probability of winning a game \ncompared to number of corners in France") +
+  scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
+  scale_x_discrete(labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+                            "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+## END GRAPH
+
+# End FR
+
+
+# DE
+germanyData$HomeCornersToAwayCorners <- germanyData$HC - germanyData$AC
+DE_over15 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=15), ]
+
+DE_dfover15 <- data.frame(table(DE_over15$FTR)) # Get count into dataframe
+
+DE_over10 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=10
+                               & germanyData$HomeCornersToAwayCorners<15), ]
+DE_dfover10 <- data.frame(table(DE_over10$FTR))
+
+DE_over7 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=7
+                              & germanyData$HomeCornersToAwayCorners<10), ]
+DE_dfover7 <- data.frame(table(DE_over7$FTR))
+
+DE_over5 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=5
+                              & germanyData$HomeCornersToAwayCorners<7), ]
+DE_dfover5 <- data.frame(table(DE_over5$FTR))
+
+DE_over3 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=3
+                              & germanyData$HomeCornersToAwayCorners<5), ]
+DE_dfover3 <- data.frame(table(DE_over3$FTR))
+
+DE_over0 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=0
+                              & germanyData$HomeCornersToAwayCorners<3), ]
+DE_dfover0 <- data.frame(table(DE_over0$FTR))
+
+DE_minus3 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=-3
+                               & germanyData$HomeCornersToAwayCorners<0), ]
+DE_dfminus3 <- data.frame(table(DE_minus3$FTR))
+
+DE_minus5 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=-5
+                               & germanyData$HomeCornersToAwayCorners<(-3)), ]
+DE_dfminus5 <- data.frame(table(DE_minus5$FTR))
+
+DE_minus7 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=-7
+                               & germanyData$HomeCornersToAwayCorners<(-5)), ]
+DE_dfminus7 <- data.frame(table(DE_minus7$FTR))
+
+DE_minus10 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=-10
+                                & germanyData$HomeCornersToAwayCorners<(-7)), ]
+DE_dfminus10 <- data.frame(table(DE_minus10$FTR))
+
+DE_minus16 <- germanyData[ which(germanyData$HomeCornersToAwayCorners>=-17
+                                & germanyData$HomeCornersToAwayCorners<(-10)), ]
+DE_dfminus16 <- data.frame(table(DE_minus16$FTR))
+
+runInGermany <- function() {
+  DE_resultDF <- data.frame()
+  DE_resultado = calculateHDA(DE_over15,DE_dfover15)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_over10,DE_dfover10)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_over7,DE_dfover7)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_over5,DE_dfover5)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_over3,DE_dfover3)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_over0,DE_dfover0)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_minus3,DE_dfminus3)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_minus5,DE_dfminus5)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_minus7,DE_dfminus7)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_minus10,DE_dfminus10)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  DE_resultado = calculateHDA(DE_minus16,DE_dfminus16)
+  DE_resultDF <- rbind(DE_resultDF, DE_resultado)
+  colnames(DE_resultDF) <- c("Home %", "Draw %", "Away%")
+  rownames(DE_resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+  DE_resultDF$groups <- rownames(DE_resultDF)
+  DE_resultDF$groups <- as.character(DE_resultDF$groups)
+  DE_resultDF$groups <- factor(DE_resultDF$groups, levels=unique(DE_resultDF$groups))
+  return(DE_resultDF)
+}
+DE_resultDF <- runInGermany()
+
+
+## GRAPH
+DE_corners <- ggplot(data = DE_resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+  geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
+  geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
+  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
+  #geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
+  #geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
+  #geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
+  ggtitle("Probability of winning a game \ncompared to number of corners in Germany") +
+  scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
+  scale_x_discrete(labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+                            "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+## END GRAPH
+
+# End DE
+
+
 
 ## END OF CORNERS
 
