@@ -260,6 +260,9 @@ to_plot9 <- data.frame(Draw_draw_Afert_HT=c(englad_draw_draw_per,france_draw_dra
                        Countries=c("England","France","Germany","Italy","Netherlands",
                                    "Portugal", "Spain", "Turkey"))
 ggplot(data = to_plot9, mapping = aes(x=Countries, y=Draw_draw_Afert_HT)) +geom_point()
+
+
+
 #####
 #Aggeregate together and get the numbers.
 library(gtools)
@@ -341,6 +344,31 @@ away_outcome_barp <- ggplot(away_bar_to_plot, mapping = aes(x="", y=Game_outcome
 
 away_outcome_piep <- away_outcome_barp + coord_polar("y", start = 0)
 away_outcome_piep + blank_theme + theme(axis.text.x=element_blank())
+#####Let see if we find smth interesting with association rules mining
+#Remove NA's
+test[c(11:26)] <- list(NULL)
+#To factor
+test$FTHG <- as.factor(test$FTHG)
+test$FTAG <- as.factor(test$FTAG)
+test$season <- as.factor(test$season)
+test$HTHG <- as.factor(test$HTHG)
+test$HTAG <- as.factor(test$HTAG)
+test$HTR <- as.factor(test$HTR)
+#
+library("arules")
+leagues_rules <- apriori(test)
+inspect(sort(leagues_rules, by = "lift"))
+leagues_rhs_outcome_rules=apriori(test,appearance = list(rhs=c("FTR=A","FTR=D","FTR=H"),
+                                                             default="lhs"),parameter=list(supp=0.05,minlen=2, conf=0.8))
+
+inspect(sort(leagues_rhs_outcome_rules, by ="lift"))
+
+leagues_lhs_outcome_rules=apriori(test,appearance = list(lhs=c("HTR=A","HTR=D","HTR=H"),
+                                                         default="rhs"),parameter=list(supp=0.05,minlen=2, conf=0.8))
+
+inspect(sort(leagues_lhs_outcome_rules, by ="lift"))
+
+############################
 ##Do the card part
 #The probabilty of winning when scoring a red card
 
