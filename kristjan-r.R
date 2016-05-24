@@ -35,12 +35,29 @@ homeFoulsDE = aggregate(HF~season, data=germanyData, mean)
 awayFoulsDE = aggregate(AF~season, data=germanyData, mean)
 seasonsDE <- array(suppressWarnings(c("00-01", "01-02","03-04", "04-05", "05-06","06-07","07-08","08-09","09-10","10-11","11-12","12-13","13-14","14-15","15-16")))
 
+## Old graph
 plot(homeFoulsDE,type = "o", main="Fouls by seasons in Bundesliga",
      xaxt = "n", frame = FALSE, col = "red", ylim=c(13, 22), ylab="Fouls", xlab = "Season")
 lines(awayFoulsDE,col="green", type="o")
 legend("topright", inset=.05,
        c("Away","Home"),fill=c("green", "red"), horiz=FALSE, bty = "n")
 axis(side=1, at=homeFoulsDE[,1],labels=seasonsDE)
+## End old
+
+##GGPLOT
+ggplot() + 
+  geom_point(data = homeFoulsDE,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_line(data = homeFoulsDE,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_point(data = awayFoulsDE,aes(x=season, y=AF, group=1, colour="red")) +
+  geom_line(data = awayFoulsDE,aes(x=season, y=AF, group=1, colour="red")) +
+  ggtitle("Fouls by seasons in Bundesliga") +
+  scale_colour_manual(name = "", values=c("green", "red", "yellow"), labels=c("Home", "Away")) +
+  xlab("Season") +
+  ylab("Fouls") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  
+
 # End DE
 
 # EN
@@ -96,7 +113,7 @@ axis(side=1, at=homeFoulsFR[,1],labels=seasonsFR)
 # End FR
 
 
-#COMBINE TOGETHER
+#COMBINE TOGETHER OLD
 par(mfrow=c(2,3))
 plot(homeFoulsFR,type = "o", main="Ligue 1",
      xaxt = "n", frame = FALSE, col = "red", ylim=c(9, 22), ylab="Fouls", xlab = "Season")
@@ -129,7 +146,115 @@ legend("topright", inset=.05,
        c("Away","Home"),fill=c("green", "red"), horiz=FALSE, bty = "n")
 axis(side=1, at=homeFoulsDE[,1],labels=seasonsDE)
 
-## End of combining
+## End of combining old
+
+## Combine new
+
+par(mfrow=c(2,3))
+DE_plot <- ggplot() + 
+  geom_point(data = homeFoulsDE,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_line(data = homeFoulsDE,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_point(data = awayFoulsDE,aes(x=season, y=AF, group=1, colour="red")) +
+  geom_line(data = awayFoulsDE,aes(x=season, y=AF, group=1, colour="red")) +
+  ggtitle("Bundesliga") +
+  scale_colour_manual(name = "", values=c("green", "red", "yellow"), labels=c("Home", "Away")) +
+  scale_y_continuous(limits = c(9, 22)) +
+  xlab("Season") +
+  ylab("Fouls") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+EN_plot <- ggplot() + 
+  geom_point(data = homeFoulsEN,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_line(data = homeFoulsEN,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_point(data = awayFoulsEN,aes(x=season, y=AF, group=1, colour="red")) +
+  geom_line(data = awayFoulsEN,aes(x=season, y=AF, group=1, colour="red")) +
+  ggtitle("Premier League") +
+  scale_colour_manual(name = "", values=c("green", "red", "yellow"), labels=c("Home", "Away")) +
+  scale_y_continuous(limits = c(9, 22)) +
+  xlab("Season") +
+  ylab("Fouls") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+IT_plot <- ggplot() + 
+  geom_point(data = homeFoulsIT,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_line(data = homeFoulsIT,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_point(data = awayFoulsIT,aes(x=season, y=AF, group=1, colour="red")) +
+  geom_line(data = awayFoulsIT,aes(x=season, y=AF, group=1, colour="red")) +
+  ggtitle("Serie A") +
+  scale_colour_manual(name = "", values=c("green", "red", "yellow"), labels=c("Home", "Away")) +
+  scale_y_continuous(limits = c(9, 22)) +
+  xlab("Season") +
+  ylab("Fouls") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+FR_plot <- ggplot() + 
+  geom_point(data = homeFoulsFR,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_line(data = homeFoulsFR,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_point(data = awayFoulsFR,aes(x=season, y=AF, group=1, colour="red")) +
+  geom_line(data = awayFoulsFR,aes(x=season, y=AF, group=1, colour="red")) +
+  ggtitle("Ligue 1") +
+  scale_colour_manual(name = "", values=c("green", "red"), labels=c("Home", "Away")) +
+  scale_y_continuous(limits = c(9, 22)) +
+  xlab("Season") +
+  ylab("Fouls") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
+ES_plot <- ggplot() + 
+  geom_point(data = homeFoulsES,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_line(data = homeFoulsES,aes(x=season, y=HF, group=1, colour="green")) +
+  geom_point(data = awayFoulsES,aes(x=season, y=AF, group=1, colour="red")) +
+  geom_line(data = awayFoulsES,aes(x=season, y=AF, group=1, colour="red")) +
+  ggtitle("La Liga") +
+  scale_colour_manual(name = "", values=c("green", "red"), labels=c("Home", "Away")) +
+  scale_y_continuous(limits = c(9, 22)) +
+  xlab("Season") +
+  ylab("Fouls") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
+multiplot(DE_plot, EN_plot, FR_plot, IT_plot, ES_plot, cols=2)
+
+## End new combining
+
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+
+
+
+
 
 ## Conlusions
 ## England has lower foul rates and away team usually commits more fouls - not in La Liga.
@@ -255,7 +380,9 @@ calculateHDA <- function(all, aggregated) {
   result <- c(homePercentage,drawPercentage,awayPercentage)
   return(result)
 }
-resultado = calculateHDA(minus16,dfminus16)
+my.list <- list(over15,dfover15,over10,dfover10,over7,dfover7,over5,dfover5,over3,dfover3,over0,dfover0,
+                minus3,dfminus3,minus5,dfminus5,minus7,dfminus7,minus10,dfminus10,minus16,dfminus16)
+resultado = calculateHDA(over15,dfover15)
 resultDF <- data.frame()
 colnames(resultDF) <- c("Home %", "Draw %", "Away%")
 rownames(resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
@@ -265,21 +392,135 @@ resultDF$groups <- rownames(resultDF)
 resultDF$groups <- as.character(resultDF$groups)
 resultDF$groups <- factor(resultDF$groups, levels=unique(resultDF$groups))
 library(ggplot2)
-# WHAT IS HAPPENING HERE?
-ggplot(data = resultDF,aes(x=as.numeric(groups), y=`Home %`)) + 
-  geom_point(aes(x=groups,y=`Home %`, colour="red"), shape=1, size=2, fill="red") + 
-  geom_point(aes(x=groups,y=`Away%`, colour="green"), shape=1, size=2, fill="green") +
-  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2, fill="yellow") +
-  geom_line(aes(colour = "yellow")) +
-  geom_line(aes(colour = "red")) +
-  geom_line(aes(colour = "green")) +
-  ggtitle("Probability of winning a game by number of corners") +
-  guides(fill = guide_legend(
-    title.theme = element_text(size=15, face="italic", colour = "red", angle = 45))) +
-  theme_bw() + 
-  scale_colour_manual(name = "Game winner", values=c("Red", "Green", "Blue"), labels=c("Home", "Away", "Draw"))
-
+colorder <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+## GRAPH
+ggplot(data = resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+  geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
+  geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
+  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
+  geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
+  geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
+  geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
+  ggtitle("Probability of winning a game \ncompared to number of corners in England") +
+  scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
+  scale_x_discrete(limits=colorder,labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+                                            "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+## END GRAPH
 #End EN
+
+# ES
+spainData$HomeCornersToAwayCorners <- spainData$HC - spainData$AC
+ES_over15 <- spainData[ which(spainData$HomeCornersToAwayCorners>=15), ]
+
+ES_dfover15 <- data.frame(table(ES_over15$FTR)) # Get count into dataframe
+
+ES_over10 <- spainData[ which(spainData$HomeCornersToAwayCorners>=10
+                             & spainData$HomeCornersToAwayCorners<15), ]
+ES_dfover10 <- data.frame(table(ES_over10$FTR))
+
+ES_over7 <- spainData[ which(spainData$HomeCornersToAwayCorners>=7
+                            & spainData$HomeCornersToAwayCorners<10), ]
+ES_dfover7 <- data.frame(table(ES_over7$FTR))
+
+ES_over5 <- spainData[ which(spainData$HomeCornersToAwayCorners>=5
+                            & spainData$HomeCornersToAwayCorners<7), ]
+ES_dfover5 <- data.frame(table(ES_over5$FTR))
+
+ES_over3 <- spainData[ which(spainData$HomeCornersToAwayCorners>=3
+                            & spainData$HomeCornersToAwayCorners<5), ]
+ES_dfover3 <- data.frame(table(ES_over3$FTR))
+
+ES_over0 <- spainData[ which(spainData$HomeCornersToAwayCorners>=0
+                            & spainData$HomeCornersToAwayCorners<3), ]
+ES_dfover0 <- data.frame(table(ES_over0$FTR))
+
+ES_minus3 <- spainData[ which(spainData$HomeCornersToAwayCorners>=-3
+                             & spainData$HomeCornersToAwayCorners<0), ]
+ES_dfminus3 <- data.frame(table(ES_minus3$FTR))
+
+ES_minus5 <- spainData[ which(spainData$HomeCornersToAwayCorners>=-5
+                             & spainData$HomeCornersToAwayCorners<(-3)), ]
+ES_dfminus5 <- data.frame(table(ES_minus5$FTR))
+
+ES_minus7 <- spainData[ which(spainData$HomeCornersToAwayCorners>=-7
+                             & spainData$HomeCornersToAwayCorners<(-5)), ]
+ES_dfminus7 <- data.frame(table(ES_minus7$FTR))
+
+ES_minus10 <- spainData[ which(spainData$HomeCornersToAwayCorners>=-10
+                              & spainData$HomeCornersToAwayCorners<(-7)), ]
+ES_dfminus10 <- data.frame(table(ES_minus10$FTR))
+
+ES_minus16 <- spainData[ which(spainData$HomeCornersToAwayCorners>=-17
+                              & spainData$HomeCornersToAwayCorners<(-10)), ]
+ES_dfminus16 <- data.frame(table(ES_minus16$FTR))
+
+#Not used
+my.list.es <- list(ES_over15,ES_dfover15,ES_over10,ES_dfover10,ES_over7,ES_dfover7,ES_over5,ES_dfover5,
+                   ES_over3,ES_dfover3,ES_over0,ES_dfover0,
+                   ES_minus3,ES_dfminus3,ES_minus5,ES_dfminus5,ES_minus7,ES_dfminus7,
+                   ES_minus10,ES_dfminus10,ES_minus16,ES_dfminus16)
+
+#evaluate one by one
+runInSpain <- function() {
+  ES_resultDF <- data.frame()
+  ES_resultado = calculateHDA(ES_over15,ES_dfover15)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_over10,ES_dfover10)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_over7,ES_dfover7)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_over5,ES_dfover5)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_over3,ES_dfover3)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_over0,ES_dfover0)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_minus3,ES_dfminus3)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_minus5,ES_dfminus5)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_minus7,ES_dfminus7)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_minus10,ES_dfminus10)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  ES_resultado = calculateHDA(ES_minus16,ES_dfminus16)
+  ES_resultDF <- rbind(ES_resultDF, ES_resultado)
+  colnames(ES_resultDF) <- c("Home %", "Draw %", "Away%")
+  rownames(ES_resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+  ES_resultDF$groups <- rownames(ES_resultDF)
+  ES_resultDF$groups <- as.character(ES_resultDF$groups)
+  ES_resultDF$groups <- factor(ES_resultDF$groups, levels=unique(ES_resultDF$groups))
+  return(ES_resultDF)
+}
+ES_resultDF <- runInSpain()
+
+## GRAPH
+ggplot(data = ES_resultDF,aes(x=`Home team's number of corners\n compared to away's`, y=`Winning probability`)) + 
+  geom_point(aes(x=groups,y=`Home %`, colour="green"), shape=1, size=2) + 
+  geom_point(aes(x=groups,y=`Away%`, colour="red"), shape=1, size=2) +
+  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2) +
+  geom_line(aes(x=as.numeric(groups),y=`Home %`, colour = "green")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Home %`), method = "lm", se = FALSE, size = 0.3, colour = "green") +
+  geom_line(aes(x=as.numeric(groups),y=`Away%`, colour="red")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Away%`), method = "lm", se = FALSE, size = 0.3, colour = "red") +
+  geom_line(aes(x=as.numeric(groups),y=`Draw %`, colour="yellow")) +
+  geom_smooth(aes(x=as.numeric(groups),y=`Draw %`), method = "lm", se = FALSE, size = 0.3, colour = "yellow") +
+  ggtitle("Probability of winning a game \ncompared to number of corners in Spain") +
+  scale_colour_manual(name = "Game winner", values=c("Green", "Red", "yellow"), labels=c("Home", "Away", "Draw")) +
+  scale_x_discrete(limits=colorder,labels=c("+15", "+10 to +14", "+7 to +9", "+6 to +8", "+3 to +5",
+                                            "0 to +3", "-1 to -3", "-4 to -5", "-6 to -7", "-8 to -10", "-11 to -16")) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+## END GRAPH
+
+
+
+# End ES
 
 ## END OF CORNERS
 
