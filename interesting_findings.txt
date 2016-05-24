@@ -49,10 +49,28 @@ If home hasn't received a red card then from 88% of cases away also hasn't score
 {AR=1} => {HR=0}   0.10255084 0.8481825  0.9366937
 84% of the times when away team was awareded a red card, the home team didn't.
 ###############################################
-We can say that not scoring a read card means 14 times higher chance to win a game when scoring a one.
-> per_of_games_won_with_red_card_for_winning_team is 0.04718201 vs per_of_games_won_without_red_card_for_winning_team is 0.6927353
+We can say that not scoring a read card means 15.5 times higher chance to win a game when scoring a one.
+> per_of_games_won_with_red_card_for_winning_team
+[1] 0.0637666 
+vs
+> per_of_games_won_without_red_card_for_winning_team
+[1] 0.9362334
 
-When can also say that losing a game is 5.2 times more likley when scoring a red card !!!
+When can also say that losing a game is 5.2 times less likley when scoring a red card !!!
 
-per_of_games_lost_with_red_card_for_losing_team is 0.1208204
-vs per_of_games_lost_without_red_card_for_losing_team is 0.6190969
+> per_of_games_lost_with_red_card_for_losing_team
+[1] 0.1632891
+vs
+> per_of_games_lost_without_red_card_for_losing_team
+[1] 0.8367109
+
+We can say that drawing a red card decreases the changes for a draw 4 times if one achives a red card and 40 times if both teams draw
+red card.
+> per_of_games_drawn_with_red_card
+[1] 0.1963221
+vs
+> per_of_games_drawn_without_red_card
+[1] 0.8036779
+vs
+> per_of_games_drawn_with_red_card_for_both
+[1] 0.02286282
