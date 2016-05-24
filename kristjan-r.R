@@ -138,7 +138,7 @@ axis(side=1, at=homeFoulsDE[,1],labels=seasonsDE)
 
 ## REFEREES
 library(plyr)
-aggregate(x ~ Year + Month, data = df, FUN = length)
+#aggregate(x ~ Year + Month, data = df, FUN = length)
 homeYellow = aggregate(HY~Referee, data=englandData, sum)
 awayYellow = aggregate(AY~Referee, data=englandData, sum)
 homeRed = aggregate(HR~Referee, data=englandData, sum)
@@ -200,8 +200,86 @@ referees$redToYellow <- referees$totalRed / referees$totalYellow
 
 
 ## START OF CORNERS
-
+# EN
 englandData$HomeCornersToAwayCorners <- englandData$HC - englandData$AC
+over15 <- englandData[ which(englandData$HomeCornersToAwayCorners>=15), ]
+
+table(over15$FTR) # Get count into table
+dfover15 <- data.frame(table(over15$FTR)) # Get count into dataframe
+
+over10 <- englandData[ which(englandData$HomeCornersToAwayCorners>=10
+                             & englandData$HomeCornersToAwayCorners<15), ]
+dfover10 <- data.frame(table(over10$FTR))
+
+over7 <- englandData[ which(englandData$HomeCornersToAwayCorners>=7
+                             & englandData$HomeCornersToAwayCorners<10), ]
+dfover7 <- data.frame(table(over7$FTR))
+
+over5 <- englandData[ which(englandData$HomeCornersToAwayCorners>=5
+                            & englandData$HomeCornersToAwayCorners<7), ]
+dfover5 <- data.frame(table(over5$FTR))
+
+over3 <- englandData[ which(englandData$HomeCornersToAwayCorners>=3
+                            & englandData$HomeCornersToAwayCorners<5), ]
+dfover3 <- data.frame(table(over3$FTR))
+
+over0 <- englandData[ which(englandData$HomeCornersToAwayCorners>=0
+                            & englandData$HomeCornersToAwayCorners<3), ]
+dfover0 <- data.frame(table(over0$FTR))
+
+minus3 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-3
+                            & englandData$HomeCornersToAwayCorners<0), ]
+dfminus3 <- data.frame(table(minus3$FTR))
+
+minus5 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-5
+                             & englandData$HomeCornersToAwayCorners<(-3)), ]
+dfminus5 <- data.frame(table(minus5$FTR))
+
+minus7 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-7
+                             & englandData$HomeCornersToAwayCorners<(-5)), ]
+dfminus7 <- data.frame(table(minus7$FTR))
+
+minus10 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-10
+                             & englandData$HomeCornersToAwayCorners<(-7)), ]
+dfminus10 <- data.frame(table(minus10$FTR))
+
+minus16 <- englandData[ which(englandData$HomeCornersToAwayCorners>=-17
+                              & englandData$HomeCornersToAwayCorners<(-10)), ]
+dfminus16 <- data.frame(table(minus16$FTR))
+
+calculateHDA <- function(all, aggregated) {
+  rows = nrow(all)
+  homePercentage = aggregated$Freq[aggregated$Var1=='H'] / rows
+  drawPercentage = aggregated$Freq[aggregated$Var1=='D'] / rows
+  awayPercentage = aggregated$Freq[aggregated$Var1=='A'] / rows
+  result <- c(homePercentage,drawPercentage,awayPercentage)
+  return(result)
+}
+resultado = calculateHDA(minus16,dfminus16)
+resultDF <- data.frame()
+colnames(resultDF) <- c("Home %", "Draw %", "Away%")
+rownames(resultDF) <- c("Home team +15", "+(10-14)", "+(7-9)", "+(5-8)", "+(3-5)", "+(0-3)", "-(0-3)", "-(4-5)", "-(6-7)", "-(8-10)", "-(11-16)")
+resultDF <- rbind(resultDF, resultado)
+resultDF
+resultDF$groups <- rownames(resultDF)
+resultDF$groups <- as.character(resultDF$groups)
+resultDF$groups <- factor(resultDF$groups, levels=unique(resultDF$groups))
+library(ggplot2)
+# WHAT IS HAPPENING HERE?
+ggplot(data = resultDF,aes(x=as.numeric(groups), y=`Home %`)) + 
+  geom_point(aes(x=groups,y=`Home %`, colour="red"), shape=1, size=2, fill="red") + 
+  geom_point(aes(x=groups,y=`Away%`, colour="green"), shape=1, size=2, fill="green") +
+  geom_point(aes(x=groups,y=`Draw %`, colour="yellow"), shape=1, size=2, fill="yellow") +
+  geom_line(aes(colour = "yellow")) +
+  geom_line(aes(colour = "red")) +
+  geom_line(aes(colour = "green")) +
+  ggtitle("Probability of winning a game by number of corners") +
+  guides(fill = guide_legend(
+    title.theme = element_text(size=15, face="italic", colour = "red", angle = 45))) +
+  theme_bw() + 
+  scale_colour_manual(name = "Game winner", values=c("Red", "Green", "Blue"), labels=c("Home", "Away", "Draw"))
+
+#End EN
 
 ## END OF CORNERS
 
