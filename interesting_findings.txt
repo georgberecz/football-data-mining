@@ -1,0 +1,55 @@
+{FTHG=0} => {HTHG=0} 0.2228082 1.0000000  2.003497
+Meaning that when full time result is null for home team then with 22% probabilty they didn't score at halftime too
+
+{FTR=H,HTHG=0} => {HTR=D}  0.1153362 0.8470021  1.995905
+Meaning that when full time result was home and halftime socre 0 then with 11% prob the game was a drawn at halftime
+
+{FTHG=3} => {FTR=H}  0.1142664 0.8975380  1.906696 Meaning that if home team scores 3 goals they are going to win 89% prob and 11% of games have ended with home win.
+
+{FTHG=2,HTAG=0} => {FTR=H}  0.1306706 0.8632362  1.833826 Meaning that when away doesn't score at halftime and home scores at least two, home is going to win with prob 0.13
+
+{FTR=A,HTR=A}=> {HTHG=0} 0.1281743 0.8687190  1.740476
+{HTR=A}=> {HTHG=0} 0.1887986 0.8618060  1.726626
+
+42 {HTAG=0,HTR=H}               => {FTR=H}  0.2495167 0.8062345  1.712734
+42. Home is going to win with 25% prob if away doesn't score at halftime
+
+5  {FTAG=0}                     => {HTAG=0} 0.3451078 1.0000000  1.613391
+ IF away didn't score at game, then 34.5% prob they didn't score at halftime
+
+39 {HTHG=1,HTR=H}               => {HTAG=0} 0.2166332 1.0000000  1.613391           When home scores at halftime one goal and wins halftime, then with 22% prob away didin't score
+
+41 {FTR=H,HTR=H}                => {HTAG=0} 0.2495167 0.8715662  1.406177            Meaning that when home wins from halftime lead, then with 25% prob away team didn't score at halftime
+
+7  {HTR=H}                      => {HTAG=0} 0.3094840 0.8679792  1.400389            When home wins halftime, then with 31% prob away didn't score at halftime
+
+31 {FTHG=0,FTAG=0,HTHG=0}              => {FTR=D} 0.08235890 1.0000000  3.812178 Meaning that 8% of games will end with draw after scoring null-null at halftime
+5% of games end with 1-1 draw after scoring 1-1 at halftime
+
+40 {FTHG=1,FTAG=1,HTAG=1}              => {FTR=D} 0.05223446 1.0000000  3.812178
+41 {FTHG=1,FTAG=1,HTHG=1}              => {FTR=D} 0.05533137 1.0000000  3.
+----------------------------
+43 {FTHG=1,FTAG=1,HTHG=0}              => {FTR=D} 0.06287656 1.0000000  3.812178
+44 {FTHG=1,FTAG=1,HTAG=0}              => {FTR=D} 0.06597346 1.0000000  3.812178
+When halftime score is nil-nil, the game ends with 6% prob with 1-1 draw
+
+1  {FTHG=4}                            => {FTR=H} 0.05268492 0.9743145  2.069797          Meaning that 5% of games has ended with home team scoring 4 goals and winning the game
+and also when home has scored 4 goals the probabilty of winning a game for home team is 0.97 (out of games, that home has scored 4 goals, 97% of them had been won)
+
+25 {HTAG=0,HTR=H}                      => {FTR=H} 0.24951670 0.8062345  1.712734 When away doesn't score at halftime then with 25% prob home wins the game
+
+6  {HTHG=2,HTR=H}                      => {FTR=H} 0.09332007 0.8683199  1.844626
+When home has scored two goals at halftime and won, then 9% of games have ended with home win
+
+1 {HTR=A} => {HTHG=0} 0.1887986 0.8618060  1.726626 Meaning that when halftime is won by away then wit prob 0.86 home hasn't scored and it have happend 19% of games
+
+6 {HR=0} => {AR=0}   0.79571699 0.8787533  1.0106599
+If home hasn't socred a red card then from 80% of cases away also hasn't scored a red card
+
+2 {AR=1} => {HR=0}   0.10255084 0.8481825  0.9366937
+###############################################
+We can say that not scoring a read card means 14 times higher change to win a game when scoring a one.
+> per_of_games_won_with_red_card_for_winning_team is 0.04718201 vs per_of_games_won_without_red_card_for_winning_team is 0.6927353
+When can also say that losing a game is 5.2 times more likley when scoring a red card
+per_of_games_lost_with_red_card_for_losing_team is 0.1208204
+vs per_of_games_lost_without_red_card_for_losing_team is 0.6190969
