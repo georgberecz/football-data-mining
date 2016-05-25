@@ -71,8 +71,8 @@ Let's take a look into the results by country (NB: These are average results):
  - Away team yellow cards per game: 2.1
  - Home team red cards per game: 0.07
  - Away team red cards per game: 0.11
- - The most agressive team in Germany: Coventry -  yellows cards per game on average.
- - The most calm team in Germany: Ipswitch -  yellow cards per game on average.
+ - The most agressive team in Germany: Duisburg - 2.68 yellows cards per game on average.
+ - The most calm team in Germany: Unterhaching - 1.38 yellow cards per game on average.
 
 ##### Italy
  - Home team yellow cards per game: 2.12
