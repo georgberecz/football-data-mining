@@ -79,8 +79,8 @@ Let's take a look into the results by country (NB: These are average results):
  - Away team yellow cards per game: 2.38
  - Home team red cards per game: 0.13
  - Away team red cards per game: 0.18
- - The most agressive team in Italy: Coventry - 2 yellows cards per game on average.
- - The most calm team in Italy: Ipswitch - 0.94 yellow cards per game on average.
+ - The most agressive team in Italy: Frosinone - 2.84 yellows cards per game on average.
+ - The most calm team in Italy: Bari - 1.7 yellow cards per game on average.
 
 ##### Spain
  - Home team yellow cards per game: 2.44
