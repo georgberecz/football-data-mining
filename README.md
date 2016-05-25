@@ -155,15 +155,15 @@ The plot here somewhat proves the point. Over the years English top flight has h
 Once again the countries with available match data were used to do the analysis. The data was clustered into groups by the difference of corners the home team had compared to the away team. The biggest difference between corners was 20. The overall trends can be seen on the following plot. 
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/Corner%20Plots/corners.png)
 One would assume that having more corners means that this team is attacking a lot more and maybe increases the winning probability as well. But it turns out that having more or less corners than your opponent has little effect on the result - unless you have more than 10 corners less, which is very interesting. There is no one logical explanation as why this is. We can also see from the plot that the home team's winning ratio is the highest of the three possible outcomes of a football game, which is in line with the talk that home team has an advantage over the away team.
-#### 5. Does leading at halftime gives a team leavarage to win a game?
-Before answering this question, we needed to clean our data. We extracted only the games where halftime results were available. Now after doing our analysis on the game outcomes we indeed concluded that winning halftime realy ups teams changes to win. It is higher for home team than for away team. Surely here a physologiacl factor comes into play and also so called "home walls".  Our claim bases on assoccation rules mining (see the next chapter) and on following chraps:
+#### 5. Does leading at halftime give a team leverage to win a game?
+Before answering this question, we needed to clean our data. We extracted only the games where halftime results were available. Now after doing our analysis on the game outcomes we indeed concluded that winning halftime realy ups teams chances of winning. It is higher for home team than for away team. Surely here a physological factor comes into play and also the so called "home walls".  Our claim bases on association rules mining (see the next chapter) and on following chraps:
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/homewinsafterht.png)
 
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/awaywinsafterht.png)
 
-This two graph show that in all leagues home is more likley to win after HT.
+These two graphs show that in all leagues home is more likely to win after HT.
 
-Following two grapsh show that home is also less likely to lose form half-time lead:
+Following two graphs show that home is also less likely to lose from half-time lead:
 
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/homelostafterHT.png)
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/awayLoosesafterHTwin.png)
@@ -176,11 +176,11 @@ When could also say that losing a game is 5.2 times less likley when scoring a r
 We can say that drawing a red card decreases the changes for a draw 4 times if one achives a red card and 40 times if both teams draw
 red card. This bases on that per of games drawn with red card 19.6%, per of games drawn without red card is 80.4% and per of games drawn with red card for both is 2.3.
 
-These claims hold on England, Spain, France, Germany and Italy leagues since those were onlyones where card data was available.
+These claims hold on England, Spain, France, Germany and Italy leagues since those were only ones where card data was available.
 
 ##Association rules mining
 
-Do find more interesting facts from our data, we decieded to use Arules package. Before doing any association mining we needed to discretizie our data. Overall we discovered about 1000 rules of which in our optionion noteworthy are following:
+To find more interesting facts from our data, we decieded to use Arules package. Before doing any association mining we needed to discretizie our data. Overall we discovered about 1000 rules of which in our opinion noteworthy are the following:
 
           *LHS*       *RHS*   *Support* *Confidence*  *Lift* *Description*
   - FTHG=0} => {HTHG=0} 0.2228082 1.0000000  2.003497 Meaning that when full time result is null for home team then with 100% probabilty they didn't score at halftime too and it has happened in 22% of cases.
@@ -205,7 +205,7 @@ Do find more interesting facts from our data, we decieded to use Arules package.
 If you want see more rules then please see files all_possible_rules_for_major_leagues.txt, card_rules_away.txt, card_rules_home.txt, leagues_game_outcome_lhs.txt, leagues_rhs_game_outcome.txt, leagues_rules_from_10_columns.txt and major_leagues_game_outcome_rhs.txt
 
 ##Futher works
-As mentioned before we focused on descriptive part. Now futher parts would be to set our focus on predictions. For example we could create an application that helps predict the possible game outcome from current standings and teams playing. Our we could also add probilty of drawing a card from current standing. So it would be an app for beating the bookies.
+As mentioned before we focused on descriptive part. Now futher parts would be to set our focus on predictions. For example we could create an application that helps predict the possible game outcome from current standings and teams playing. Or we could also add probability of drawing a card from current standing. So it would be an app for beating the bookies.
 
 ##Related works
 Well, at first, it is clear that bookmakers have done that sort data mining and analysis before and doing actively at the moment. But their findings and models are not publically available, otherwise they would lose their revenue. 
@@ -222,4 +222,4 @@ Altough there are many sites for football statistics and predictions, for exampl
   - https://betegy.com/
   - http://www.forebet.com/en/football-tips-and-predictions-for-today
   
-we still belive that we add novelity to this domain by looking at cards, halftime results and making some predictions based on these.
+We still believe that we add novelity to this domain by looking at cards, halftime results and making some predictions based on these.
