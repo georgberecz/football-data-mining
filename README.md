@@ -91,4 +91,8 @@ Let's take a look into the results by country (NB: These are average results):
  - The most calm team in Spain: Barcelona - 1.84 yellow cards per game on average.
  - It is also worth mentioning that there is a team in Spain called Xerex, who receives 0.37 red cards per game!
 
+Now, to take everything together with one plot we can see the average red and yellow cards received by countries:
+![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/Number_Of_Cards_Per_Game.png)
+We can clearly see from the above image that England is the least aggressive country by cards given. But if we think of it from another corner then perhaps the referees are not so strict and let the game be more aggressive? Probably of the 2 combined. Also it is quite clear that Spain has the highest average on cards given per game, both red and yellow cards. 
+
 ## Results
