@@ -30,7 +30,7 @@ The whole data is downloadable from this [link](http://www.football-data.co.uk/d
 ## Goals
 We chose this data because it is about the game we all love. The goals of this project were to find some interesting patterns or rules that one football fan might not see himself and maybe prove or bust some myths that we had. For example, do your chances of winning a game increase when you lead at half time or whether having loads of corner kicks more than your opponent increases your chances of winning a football match. In addition, we wanted to know which referees are more card-happy than others and which leagues follow more fair-play principles. English league has always been considered by football fans as a league where referees tend to let game play whereas Italian league has always been considered as the most tactical and defensive league. We aim to find out if these are misconceptions or not.
 
-## Structure
+## Results
 The analysis was done using R. The code is spread across .r files in the root folder of the project.
 #### 1. Teams aggressiveness across the countries based on the yellow and red cards given.
 
@@ -96,4 +96,3 @@ Now, to take everything together with one plot we can see the average red and ye
 
 We can clearly see from the above image that England is the least aggressive country by cards given. But if we think of it from another corner then perhaps the referees are not so strict and let the game be more aggressive? Probably of the 2 combined. Also it is quite clear that Spain has the highest average on cards given per game, both red and yellow cards. That shows that the referees are more strict, probably more acting/diving by players (because they know that referees will often book opponent even after a dive) and also it is a common knowledge that the players in the southern parts of Europe usually are more temparamental and hot blooded.
 
-## Results
