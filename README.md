@@ -121,3 +121,71 @@ The plot here somewhat proves the point. Over the years English top flight has h
 Once again the countries with available match data were used to do the analysis. The data was clustered into groups by the difference of corners the home team had compared to the away team. The biggest difference between corners was 20. The overall trends can be seen on the following plot. 
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/Corner%20Plots/corners.png)
 One would assume that having more corners means that this team is attacking a lot more and maybe increases the winning probability as well. But it turns out that having more or less corners than your opponent has little effect on the result - unless you have more than 10 corners less, which is very interesting. There is no one logical explanation as why this is. We can also see from the plot that the home team's winning ratio is the highest of the three possible outcomes of a football game, which is in line with the talk that home team has an advantage over the away team.
+#### 5. Does leading at halftime gives a team leavarage to win a game?
+Before answering this question, we needed to clean our data. We extracted only the games where halftime results were available. Now after doing our analysis on the game outcomes we indeed concluded that winning halftime realy ups teams changes to win. It is higher for home team than for away team. Surely here a physologiacl factor comes into play and also so called "home walls".  Our claim bases on assoccation rules mining (see the next chapter) and on following chraps:
+![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/homewinsafterht.png)
+
+![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/awaywinsafterht.png)
+
+This two graph show that in all leagues home is more likley to win after HT.
+
+Following two grapsh show that home is also less likely to lose form half-time lead:
+
+![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/homelostafterHT.png)
+![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/awayLoosesafterHTwin.png)
+
+### 6. Does a red card affect the game outcome?
+Our answer to this question is yes. Altough red card itself is quite rare phenomeon, it still has impact on games. What we found was that not scoring a read card means 15.5 times higher chance to win a game when scoring a one. it bases on fact that per of games won with red card for winning team is 6.4% and the per of games won without red card for winning team is 93.6%
+
+When could also say that losing a game is 5.2 times less likley when scoring a red card per of games lost with red card for losing team 16.3% whereas per of games lost without red card for losing team is 83.7%. But we don't trust this claims since as mentioned before, red card is quite unique event. Thus in futher work we would have to come out with a qualifier to get more accurate result.
+
+We can say that drawing a red card decreases the changes for a draw 4 times if one achives a red card and 40 times if both teams draw
+red card. This bases on that per of games drawn with red card 19.6%, per of games drawn without red card is 80.4% and per of games drawn with red card for both is 2.3.
+
+These claims hold on England, Spain, France, Germany and Italy leagues since those were onlyones where card data was available.
+
+##Association rules mining
+
+Do find more interesting facts from our data, we decieded to use Arules package. Before doing any association mining we needed to discretizie our data. Overall we discovered about 1000 rules of which in our optionion noteworthy are following:
+
+          *LHS*       *RHS*   *Support* *Confidence*  *Lift* *Description*
+  - FTHG=0} => {HTHG=0} 0.2228082 1.0000000  2.003497 Meaning that when full time result is null for home team then with 100% probabilty they didn't score at halftime too and it has happened in 22% of cases.
+  - {FTR=H,HTHG=0} => {HTR=D}  0.1153362 0.8470021  1.995905 Meaning that when full time result was home team and halftime score 0 then with 84% prob the game was at draw at halftime.
+  - {FTHG=3} => {FTR=H}  0.1142664 0.8975380  1.906696 Meaning that if home team scores 3 goals they are going to win 89% prob and 11% of games have ended with home win or with a draw.
+  - {FTHG=2,HTAG=0} => {FTR=H}  0.1306706 0.8632362  1.833826 Meaning that when away team doesn't score at halftime and home scores at least two, home is going to win with prob 0.86
+  - {FTR=A,HTR=A}=> {HTHG=0} 0.1281743 0.8687190  1.740476 Meaning tha with 86% probabilty home team didn't score when awayteam wins at full- and half-time.
+  - {HTR=A}=> {HTHG=0} 0.1887986 0.8618060  1.726626 Meaning that in 86% of the times when away team leads at half time, the home team has not scored.
+  - {HTAG=0,HTR=H} => {FTR=H}  0.2495167 0.8062345  1.712734 Home is going to win with 80% prob if away doesn't score at halftime.
+  - {FTAG=0} => {HTAG=0} 0.3451078 1.0000000  1.613391 Meaning that 34.5% of games ended without away team scoring.
+  - {HTHG=1,HTR=H} => {HTAG=0} 0.2166332 1.0000000  1.613391 In 22% of the matches home team leads 1-0 at home at halftime.
+  - {FTR=H,HTR=H} => {HTAG=0} 0.2495167 0.8715662  1.406177 Meaning that when home wins from halftime lead, then with 87% prob away team didn't score at halftime.
+  - {HTR=H} => {HTAG=0} 0.3094840 0.8679792  1.400389 When home team wins halftime, then with 87% prob away team didn't score at halftime.
+  - {FTHG=0,FTAG=0,HTHG=0} => {FTR=D} 0.08235890 1.0000000  3.812178 Meaning that 8% of games will end with draw after nil-nil score at halftime
+  - {FTHG=4} => {FTR=H} 0.05268492 0.9743145  2.069797 Meaning that 5% of games has ended with home team scoring 4 goals and winning the game and also when home has scored 4 goals the probabilty of winning a game for home team is 0.97 (out of games, that home has scored 4 goals, 97% of them had been won)
+  - {HTAG=0,HTR=H} => {FTR=H} 0.24951670 0.8062345  1.712734 When away doesn't score at halftime and you home team leads then with 80% prob home team wins the game.
+  - {HTHG=2,HTR=H} => {FTR=H} 0.09332007 0.8683199  1.844626 When home team has scored two goals at halftime and won, the probability of winning is 87%.
+  - {HTR=A} => {HTHG=0} 0.1887986 0.8618060  1.726626 Meaning that when halftime is won by away team then with prob 0.86 home team hasn't scored and it has happened 19% of games.
+  - {HR=0} => {AR=0}   0.79571699 0.8787533  1.0106599 If home hasn't received a red card then from 88% of cases away also hasn't scored a red card.
+  - {AR=1} => {HR=0}   0.10255084 0.8481825  0.9366937 Meaning that in 84% of the times when away team was awareded a red card, the home team didn't.
+  
+If you want see more rules then please see files all_possible_rules_for_major_leagues.txt, card_rules_away.txt, card_rules_home.txt, leagues_game_outcome_lhs.txt, leagues_rhs_game_outcome.txt, leagues_rules_from_10_columns.txt and major_leagues_game_outcome_rhs.txt
+
+##Futher works
+As mentioned before we focused on descriptive part. Now futher parts would be to set our focus on predictions. For example we could create an application that helps predict the possible game outcome from current standings and teams playing. Our we could also add probilty of drawing a card from current standing. So it would be an app for beating the bookies.
+
+##Related works
+Well, at first, it is clear that bookmakers have done that sort data mining and analysis before and doing actively at the moment. But their findings and models are not publically available, otherwise they would lose their revenue. 
+
+Altough there are many sites for football statistics and predictions, for example :
+  - http://www.fourfourtwo.com/features/analysis
+  - https://www.whoscored.com/Matches/1006295/MatchReport
+  - http://www.soccerstats.com/
+  - http://www.european-football-statistics.co.uk/league.htm
+  - http://fcstats.com/longest-streaks,3.php
+  - http://www.squawka.com/home/
+  - https://www.statbunker.com/
+  - https://www.google.ee/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=football%20predictions
+  - https://betegy.com/
+  - http://www.forebet.com/en/football-tips-and-predictions-for-today
+  
+we still belive that we add novelity to this domain by looking at cards, halftime results and making some predictions based on these.
