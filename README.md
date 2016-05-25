@@ -1,5 +1,6 @@
 # 23 Years of Football
-This project is about football data for data mining purposes.
+This project is about football data for data mining purposes. In our project we used descriptive data mining approach. In futher works, we could extend our findings to create a nice model to beat bookies.
+
 ### Who are we?
 - Allar Soo
 - Georg Berecz
@@ -29,6 +30,21 @@ The whole data is downloadable from this [link](http://www.football-data.co.uk/d
 
 ## Goals
 We chose this data because it is about the game we all love. The goals of this project were to find some interesting patterns or rules that one football fan might not see himself and maybe prove or bust some myths that we had. For example, do your chances of winning a game increase when you lead at half time or whether having loads of corner kicks more than your opponent increases your chances of winning a football match. In addition, we wanted to know which referees are more card-happy than others and which leagues follow more fair-play principles. English league has always been considered by football fans as a league where referees tend to let game play whereas Italian league has always been considered as the most tactical and defensive league. We aim to find out if these are misconceptions or not.
+
+We decieded to set following sub-goals for our analysis:
+  - Average goals per game for all the seasons and for all the countries
+  - Average cards per game per country (in order to see fairplay)
+  - In which country are the most fair/aggressive teams
+  - Who is scoring more cards: home or away?
+  - What's the probability to win away/home if you lead at the half time (Home team vs Away team) 
+  - Least goals in order to win the league, most goals conceded with winning the league
+  - Most goals conceded ever, most goals scored ever (one team per game, one team per season)
+  - What is the probabilty that you lose if you get red card (is that higher than the prob. that you lose if you don’t get a red card?)
+  - The overall accuracy (how many shots (+ on target) you need in order to score a goal OVERALL in all countries and all teams and all seasons)
+  - If one team has more corners than the other, does it on average mean that the team will win?
+  - Most cards per referee
+  - What are interesting association rules
+
 
 ## Results
 The analysis was done using R. The code is spread across .r files in the root folder of the project.
