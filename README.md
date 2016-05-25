@@ -93,6 +93,6 @@ Let's take a look into the results by country (NB: These are average results):
 
 Now, to take everything together with one plot we can see the average red and yellow cards received by countries:
 ![alt tag](https://github.com/georgberecz/football-data-mining/blob/master/Number_Of_Cards_Per_Game.png)
-We can clearly see from the above image that England is the least aggressive country by cards given. But if we think of it from another corner then perhaps the referees are not so strict and let the game be more aggressive? Probably of the 2 combined. Also it is quite clear that Spain has the highest average on cards given per game, both red and yellow cards. 
+We can clearly see from the above image that England is the least aggressive country by cards given. But if we think of it from another corner then perhaps the referees are not so strict and let the game be more aggressive? Probably of the 2 combined. Also it is quite clear that Spain has the highest average on cards given per game, both red and yellow cards. That shows that the referees are more strict, probably more acting/diving by players (because they know that referees will often book opponent even after a dive) and also it is a common knowledge that the players in the southern parts of Europe usually are more temparamental and hot blooded.
 
 ## Results
