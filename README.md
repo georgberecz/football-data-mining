@@ -10,7 +10,7 @@ This project is about football data for data mining purposes.
 The data used in this project is about football result and statistics dating back to year 1993 with the newest data being as late as May 2016. In this project data from the top flights of England, Germany, Italy, Spain, France, the Netherlands, Portugal and Turkey is used for analysis. Not the full scope of the data available was used for the project. Data used for this project is as follows:
 - England from 93/94 (match stats from 00/01 on + referees)
 - Germany from 93/94 (match stats from 00/01 on - but not 02/03)
-- Italy from 93/94 (match stats from 05/06 on + referees)
+- Italy from 93/94 (match stats from 05/06 on + referees 05/06 to 06/07)
   - no attendance, no HO, no AO
 - Spain from 93/94 (match stats from 05/06)
   - no attendance, no referees, no HO, no AO
@@ -96,3 +96,5 @@ Now, to take everything together with one plot we can see the average red and ye
 
 We can clearly see from the above image that England is the least aggressive country by cards given. But if we think of it from another corner then perhaps the referees are not so strict and let the game be more aggressive? Probably of the 2 combined. Also it is quite clear that Spain has the highest average on cards given per game, both red and yellow cards. That shows that the referees are more strict, probably more acting/diving by players (because they know that referees will often book opponent even after a dive) and also it is a common knowledge that the players in the southern parts of Europe usually are more temparamental and hot blooded.
 
+#### 2. Referees
+First of all, only England has substantial referee data available for referees - since 00/01. For further analysis referees with more than 200 games were picked - there were 12 of such referes. Statistical analysis was performed on these referees. Rob Styles is the referee that gave away the most cards per game (3,9). He refereed up until year 2009. The least card-happy referee was Mark Halsey, who ended his career in 2013, with 2,3 cards per game. Since the beginning of data from 00/01 season Mike Dean has given away the most cards in total - 1516. Other referees to give away more than 1000 cards were Phil Dowd (1153), Martin Atkinson (1050) and Howard Webb (1001). Mark Clattenburg is the only referee to give less red cards to away team than home team (28 vs 16) whereas 9 out of 11 other referees give at least 1.5 times more red cards to away games. Similar pattern applies for yellow cards. Away teams are awarded more yellow cards by all 12 observed referees (varying from 1.08 to 1.52 times). So we can tell that away team is rewarded more cards per game. This can be down to the fact that home team is supported by home crowd and the referees are more reluctant to give away cards or that the away team is more under pressure to perform away from home and make more mistakes.
