@@ -1,0 +1,5 @@
+> inspect(sort(leagues_lhs_outcome_rules, by ="lift"))
+  lhs        rhs      support   confidence lift    
+1 {HTR=A} => {HTHG=0} 0.1887986 0.8618060  1.726626
+2 {HTR=H} => {FTR=H}  0.2862854 0.8029162  1.705685
+3 {HTR=H} => {HTAG=0} 0.3094840 0.8679792  1.400389

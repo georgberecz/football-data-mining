@@ -260,6 +260,9 @@ to_plot9 <- data.frame(Draw_draw_Afert_HT=c(englad_draw_draw_per,france_draw_dra
                        Countries=c("England","France","Germany","Italy","Netherlands",
                                    "Portugal", "Spain", "Turkey"))
 ggplot(data = to_plot9, mapping = aes(x=Countries, y=Draw_draw_Afert_HT)) +geom_point()
+
+
+
 #####
 #Aggeregate together and get the numbers.
 library(gtools)
@@ -341,23 +344,95 @@ away_outcome_barp <- ggplot(away_bar_to_plot, mapping = aes(x="", y=Game_outcome
 
 away_outcome_piep <- away_outcome_barp + coord_polar("y", start = 0)
 away_outcome_piep + blank_theme + theme(axis.text.x=element_blank())
+#####Let see if we find smth interesting with association rules mining
+#Remove NA's
+test[c(11:26)] <- list(NULL)
+#To factor
+test$FTHG <- as.factor(test$FTHG)
+test$FTAG <- as.factor(test$FTAG)
+test$season <- as.factor(test$season)
+test$HTHG <- as.factor(test$HTHG)
+test$HTAG <- as.factor(test$HTAG)
+test$HTR <- as.factor(test$HTR)
+#
+library("arules")
+leagues_rules <- apriori(test)
+inspect(sort(leagues_rules, by = "lift"))
+leagues_rhs_outcome_rules=apriori(test,appearance = list(rhs=c("FTR=A","FTR=D","FTR=H"),
+                                                             default="lhs"),parameter=list(supp=0.05,minlen=2, conf=0.8))
+
+inspect(sort(leagues_rhs_outcome_rules, by ="lift"))
+
+leagues_lhs_outcome_rules=apriori(test,appearance = list(lhs=c("HTR=A","HTR=D","HTR=H"),
+                                                         default="rhs"),parameter=list(supp=0.05,minlen=2, conf=0.8))
+
+inspect(sort(leagues_lhs_outcome_rules, by ="lift"))
+
+############################
 ##Do the card part
 #The probabilty of winning when scoring a red card
 
+max(italyData$HY, na.rm = TRUE)
 
-#The probabilty of winning when scoring a yellow card
+#Find the probabilty of home/away team winning/losing/drawing the game when scoring red card
+#Find the probabilty of winning/drawing/losing a game when not scoring any cards
+library("arules")
+#Lets extraxt games where cards are avialable
+englad_card_games<-englandData[!(is.na(englandData$AR)) & !(is.na(englandData$HR)),]
+france_card_games<-franceData[!(is.na(franceData$AR)) & !(is.na(franceData$HR)),]
+germany_card_games<-germanyData[!(is.na(germanyData$AR)) & !(is.na(germanyData$HR)),]
+italy_card_games<-italyData[!(is.na(italyData$AR)) & !(is.na(italyData$HR)),]
+spain_card_games<-spainData[!(is.na(spainData$AR)) & !(is.na(spainData$HR)),]
 
+games_with_cards <- smartbind(englad_card_games,france_card_games,germany_card_games,
+                            italy_card_games, spain_card_games)
 
-#The probabilty of winning when scoring a card
+per_of_games_won_with_red_card_for_winning_team <- (nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$FTR=='H',]) + nrow(games_with_cards[games_with_cards$AR>=1 & games_with_cards$FTR=='A',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_won_without_red_card_for_winning_team <- (nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$FTR=='H',]) + nrow(games_with_cards[games_with_cards$AR==0 & games_with_cards$FTR=='A',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_lost_with_red_card_for_losing_team <- (nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$FTR=='A',]) + nrow(games_with_cards[games_with_cards$AR>=1 & games_with_cards$FTR=='H',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_lost_without_red_card_for_losing_team <- (nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$FTR=='A',]) + nrow(games_with_cards[games_with_cards$AR==0 & games_with_cards$FTR=='H',])) / nrow(games_with_cards[games_with_cards$FTR=='A' | games_with_cards$FTR=='H',])
+per_of_games_drawn_with_red_card_for_both <- nrow(games_with_cards[games_with_cards$HR>=1 & games_with_cards$AR>=1 & games_with_cards$FTR=='D',])  / nrow(games_with_cards[games_with_cards$FTR=='D',])
+per_of_games_drawn_with_red_card <- nrow(games_with_cards[(games_with_cards$HR>=1 | games_with_cards$AR>=1) & games_with_cards$FTR=='D',])  / nrow(games_with_cards[games_with_cards$FTR=='D',])
+per_of_games_drawn_without_red_card <- nrow(games_with_cards[games_with_cards$HR==0 & games_with_cards$AR==0 & games_with_cards$FTR=='D',]) / nrow(games_with_cards[games_with_cards$FTR=='D',])
 
+##### RULES part #####
+#Lets factorizie data
+games_with_cards$HTHG <- as.factor(games_with_cards$HTHG)
+games_with_cards$HTAG <- as.factor(games_with_cards$HTAG)
+games_with_cards$FTHG <- as.factor(games_with_cards$FTHG)
+games_with_cards$FTAG <- as.factor(games_with_cards$FTAG)
+games_with_cards$season <- as.factor(games_with_cards$season)
+games_with_cards$Attendance <- as.factor(games_with_cards$Attendance)
+games_with_cards$HS <- as.factor(games_with_cards$HS)
+games_with_cards$AS <- as.factor(games_with_cards$AS)
+games_with_cards$HST <- as.factor(games_with_cards$HST)
+games_with_cards$AST <- as.factor(games_with_cards$AST)
+games_with_cards$HY <- as.factor(games_with_cards$HY)
+games_with_cards$AY <- as.factor(games_with_cards$AY)
+games_with_cards$HR <- as.factor(games_with_cards$HR)
+games_with_cards$AR <- as.factor(games_with_cards$AR)
+games_with_cards$HC <- as.factor(games_with_cards$HC)
+games_with_cards$AC <- as.factor(games_with_cards$AC)
+games_with_cards$HF <- as.factor(games_with_cards$HF)
+games_with_cards$AF <- as.factor(games_with_cards$AF)
+games_with_cards$HO <- as.factor(games_with_cards$HO)
+games_with_cards$AO <- as.factor(games_with_cards$AO)
+##Lets mine
+card_rules_home=apriori(games_with_cards,appearance = list(lhs=c("HR=0","HR=1","HR=2","HR=3"),
+                          default="rhs"),parameter=list(supp=0.01,minlen=2, conf=0.5))
 
-#The probabilty of losing when scoring a red card
+inspect(sort(card_rules_home, by="lift"))
 
+rhs_outcome_rules=apriori(games_with_cards,appearance = list(rhs=c("FTR=A","FTR=D","FTR=H"),
+                            default="lhs"),parameter=list(supp=0.05,minlen=2, conf=0.8))
 
-#The probabilty of losin when scoring a yellow card
+inspect(sort(rhs_outcome_rules,by="lift"))
 
+card_rules_away=apriori(games_with_cards,appearance = list(lhs=c("AR=0","AR=1","AR=2","AR=3","AR=4"),
+                                                           default = "rhs"),parameter=list(supp=0.01,minlen=2, conf=0.6))
 
-#The probabilty of losin when scoring a card
+inspect(sort(card_rules_away, by="lift"))
+inspect(card_rules_away)
 
-
-
+ff_rules = apriori(games_with_cards)
+inspect(sort(ff_rules, by="lift"))
