@@ -24,6 +24,11 @@ englandOverallCards = englandOverallAwayRed + englandOverallAwayYellow + england
 
 ### England's average cards per game ###
 
+englandOverallYellowsHome = englandOverallHomeYellow / nrow(englandGamesWithCards)
+englandOverallYellowsAway = englandOverallAwayYellow / nrow(englandGamesWithCards)
+englandOverallRedsHome = englandOverallHomeRed / nrow(englandGamesWithCards)
+englandOverallRedsAway = englandOverallAwayRed / nrow(englandGamesWithCards)
+
 englandOverallCardsPerGame = englandOverallCards / nrow(englandGamesWithCards)
 englandOverallYellowsPerGame = (englandOverallHomeYellow + englandOverallAwayYellow) / nrow(englandGamesWithCards)
 englandOverallRedsPerGame = (englandOverallHomeRed + englandOverallAwayRed) / nrow(englandGamesWithCards)
@@ -39,6 +44,11 @@ franceOverallCards = franceOverallAwayRed + franceOverallAwayYellow + franceOver
 
 ### France's average cards per game ###
 
+franceOverallYellowsHome = franceOverallHomeYellow / nrow(franceGamesWithCards)
+franceOverallYellowsAway = franceOverallAwayYellow / nrow(franceGamesWithCards)
+franceOverallRedsHome = franceOverallHomeRed / nrow(franceGamesWithCards)
+franceOverallRedsAway = franceOverallAwayRed / nrow(franceGamesWithCards)
+
 franceOverallCardsPerGame = franceOverallCards / nrow(franceGamesWithCards)
 franceOverallYellowsPerGame = (franceOverallHomeYellow + franceOverallAwayYellow) / nrow(franceGamesWithCards)
 franceOverallRedsPerGame = (franceOverallHomeRed + franceOverallAwayRed) / nrow(franceGamesWithCards)
@@ -53,6 +63,11 @@ germanyOverallAwayRed <- sum(germanyGamesWithCards$AR)
 germanyOverallCards = germanyOverallAwayRed + germanyOverallAwayYellow + germanyOverallHomeRed + germanyOverallHomeYellow
 
 ### Germany's average cards per game ###
+
+germanyOverallYellowsHome = germanyOverallHomeYellow / nrow(germanyGamesWithCards)
+germanyOverallYellowsAway = germanyOverallAwayYellow / nrow(germanyGamesWithCards)
+germanyOverallRedsHome = germanyOverallHomeRed / nrow(germanyGamesWithCards)
+germanyOverallRedsAway = germanyOverallAwayRed / nrow(germanyGamesWithCards)
 
 germanyOverallCardsPerGame = germanyOverallCards / nrow(germanyGamesWithCards)
 germanyOverallYellowsPerGame = (germanyOverallHomeYellow + germanyOverallAwayYellow) / nrow(germanyGamesWithCards)
@@ -70,6 +85,11 @@ italyOverallCards = italyOverallAwayRed + italyOverallAwayYellow + italyOverallH
 
 ### Italy's average cards per game ###
 
+italyOverallYellowsHome = italyOverallHomeYellow / nrow(italyGamesWithCards)
+italyOverallYellowsAway = italyOverallAwayYellow / nrow(italyGamesWithCards)
+italyOverallRedsHome = italyOverallHomeRed / nrow(italyGamesWithCards)
+italyOverallRedsAway = italyOverallAwayRed / nrow(italyGamesWithCards)
+
 italyOverallCardsPerGame = italyOverallCards / nrow(italyGamesWithCards)
 italyOverallYellowsPerGame = (italyOverallHomeYellow + italyOverallAwayYellow) / nrow(italyGamesWithCards)
 italyOverallRedsPerGame = (italyOverallHomeRed + italyOverallAwayRed) / nrow(italyGamesWithCards)
@@ -84,6 +104,11 @@ spainOverallAwayRed <- sum(spainGamesWithCards$AR)
 spainOverallCards = spainOverallAwayRed + spainOverallAwayYellow + spainOverallHomeRed + spainOverallHomeYellow
 
 ### Spain's average cards per game ###
+
+spainOverallYellowsHome = spainOverallHomeYellow / nrow(spainGamesWithCards)
+spainOverallYellowsAway = spainOverallAwayYellow / nrow(spainGamesWithCards)
+spainOverallRedsHome = spainOverallHomeRed / nrow(spainGamesWithCards)
+spainOverallRedsAway = spainOverallAwayRed / nrow(spainGamesWithCards)
 
 spainOverallCardsPerGame = spainOverallCards / nrow(spainGamesWithCards)
 spainOverallYellowsPerGame = (spainOverallHomeYellow + spainOverallAwayYellow) / nrow(spainGamesWithCards)
@@ -182,6 +207,209 @@ englandMeanYellowsPerGame = mean(englandOverallCardsByTeam$YellowsPerGame)
 englandMeanRedsPerGame = mean(englandOverallCardsByTeam$RedsPerGame)
 
 englandOverallCardsByTeam
+
+
+## France ## 
+
+homeYellow <- aggregate(HY~HomeTeam, data=franceGamesWithCards, FUN=sum)
+homeRed <- aggregate(HR~HomeTeam, data=franceGamesWithCards, FUN=sum)
+awayYellow <- aggregate(AY~AwayTeam, data=franceGamesWithCards, FUN=sum)
+awayRed <- aggregate(AR~AwayTeam, data=franceGamesWithCards, FUN=sum)
+
+franceHomeCards <- merge(homeYellow, homeRed)
+franceAwayCards <- merge(awayYellow, awayRed)
+
+franceHomeCards <- rename(franceHomeCards, c("HomeTeam"="Team", "HY"="Yellow", "HR"="Red"))
+franceAwayCards <- rename(franceAwayCards, c("AwayTeam"="Team", "AY"="Yellow", "AR"="Red"))
+
+franceOverallCardsByTeam <- merge(franceHomeCards, franceAwayCards, by=c("Team"))
+allCards <- c("AllCards")
+franceOverallCardsByTeam[,allCards] <- franceOverallCardsByTeam$Yellow.x + franceOverallCardsByTeam$Yellow.y + franceOverallCardsByTeam$Red.y + franceOverallCardsByTeam$Red.x
+
+### Games played ###
+
+homeClubGamesPlayed <- aggregate(AwayTeam ~ HomeTeam, data=franceGamesWithCards, FUN = length)
+awayClubGamesPlayed <- aggregate(HomeTeam ~ AwayTeam, data=franceGamesWithCards, FUN = length)
+
+homeClubGamesPlayed <- rename(homeClubGamesPlayed, c("HomeTeam"="Team", "AwayTeam"="Games"))
+awayClubGamesPlayed <- rename(awayClubGamesPlayed, c("AwayTeam"="Team", "HomeTeam"="Games"))
+
+allClubsGamesPlayed <- merge(homeClubGamesPlayed, awayClubGamesPlayed, by=c("Team"))
+
+franceOverallCardsByTeam <- merge(franceOverallCardsByTeam, allClubsGamesPlayed, by=c("Team"))
+
+yellowsPerGame <- c("YellowsPerGame")
+redsPerGame <- c("RedsPerGame")
+
+franceOverallCardsByTeam[,yellowsPerGame] <- (franceOverallCardsByTeam$Yellow.x + franceOverallCardsByTeam$Yellow.y)/(franceOverallCardsByTeam$Games.x+franceOverallCardsByTeam$Games.y) 
+franceOverallCardsByTeam[,redsPerGame] <- (franceOverallCardsByTeam$Red.x + franceOverallCardsByTeam$Red.y)/(franceOverallCardsByTeam$Games.x+franceOverallCardsByTeam$Games.y) 
+
+### Yellows and reds per game on average in France ###
+
+franceMeanYellowsPerGame = mean(franceOverallCardsByTeam$YellowsPerGame)
+franceMeanRedsPerGame = mean(franceOverallCardsByTeam$RedsPerGame)
+
+franceOverallCardsByTeam
+
+
+## Germany ## 
+
+homeYellow <- aggregate(HY~HomeTeam, data=germanyGamesWithCards, FUN=sum)
+homeRed <- aggregate(HR~HomeTeam, data=germanyGamesWithCards, FUN=sum)
+awayYellow <- aggregate(AY~AwayTeam, data=germanyGamesWithCards, FUN=sum)
+awayRed <- aggregate(AR~AwayTeam, data=germanyGamesWithCards, FUN=sum)
+
+germanyHomeCards <- merge(homeYellow, homeRed)
+germanyAwayCards <- merge(awayYellow, awayRed)
+
+germanyHomeCards <- rename(germanyHomeCards, c("HomeTeam"="Team", "HY"="Yellow", "HR"="Red"))
+germanyAwayCards <- rename(germanyAwayCards, c("AwayTeam"="Team", "AY"="Yellow", "AR"="Red"))
+
+germanyOverallCardsByTeam <- merge(germanyHomeCards, germanyAwayCards, by=c("Team"))
+allCards <- c("AllCards")
+germanyOverallCardsByTeam[,allCards] <- germanyOverallCardsByTeam$Yellow.x + germanyOverallCardsByTeam$Yellow.y + germanyOverallCardsByTeam$Red.y + germanyOverallCardsByTeam$Red.x
+
+### Games played ###
+
+homeClubGamesPlayed <- aggregate(AwayTeam ~ HomeTeam, data=germanyGamesWithCards, FUN = length)
+awayClubGamesPlayed <- aggregate(HomeTeam ~ AwayTeam, data=germanyGamesWithCards, FUN = length)
+
+homeClubGamesPlayed <- rename(homeClubGamesPlayed, c("HomeTeam"="Team", "AwayTeam"="Games"))
+awayClubGamesPlayed <- rename(awayClubGamesPlayed, c("AwayTeam"="Team", "HomeTeam"="Games"))
+
+allClubsGamesPlayed <- merge(homeClubGamesPlayed, awayClubGamesPlayed, by=c("Team"))
+
+germanyOverallCardsByTeam <- merge(germanyOverallCardsByTeam, allClubsGamesPlayed, by=c("Team"))
+
+yellowsPerGame <- c("YellowsPerGame")
+redsPerGame <- c("RedsPerGame")
+
+germanyOverallCardsByTeam[,yellowsPerGame] <- (germanyOverallCardsByTeam$Yellow.x + germanyOverallCardsByTeam$Yellow.y)/(germanyOverallCardsByTeam$Games.x+germanyOverallCardsByTeam$Games.y) 
+germanyOverallCardsByTeam[,redsPerGame] <- (germanyOverallCardsByTeam$Red.x + germanyOverallCardsByTeam$Red.y)/(germanyOverallCardsByTeam$Games.x+germanyOverallCardsByTeam$Games.y) 
+
+### Yellows and reds per game on average in Germany ###
+
+germanyMeanYellowsPerGame = mean(germanyOverallCardsByTeam$YellowsPerGame)
+germanyMeanRedsPerGame = mean(germanyOverallCardsByTeam$RedsPerGame)
+
+germanyOverallCardsByTeam
+
+
+## Italy ## 
+
+homeYellow <- aggregate(HY~HomeTeam, data=italyGamesWithCards, FUN=sum)
+homeRed <- aggregate(HR~HomeTeam, data=italyGamesWithCards, FUN=sum)
+awayYellow <- aggregate(AY~AwayTeam, data=italyGamesWithCards, FUN=sum)
+awayRed <- aggregate(AR~AwayTeam, data=italyGamesWithCards, FUN=sum)
+
+italyHomeCards <- merge(homeYellow, homeRed)
+italyAwayCards <- merge(awayYellow, awayRed)
+
+italyHomeCards <- rename(italyHomeCards, c("HomeTeam"="Team", "HY"="Yellow", "HR"="Red"))
+italyAwayCards <- rename(italyAwayCards, c("AwayTeam"="Team", "AY"="Yellow", "AR"="Red"))
+
+italyOverallCardsByTeam <- merge(italyHomeCards, italyAwayCards, by=c("Team"))
+allCards <- c("AllCards")
+italyOverallCardsByTeam[,allCards] <- italyOverallCardsByTeam$Yellow.x + italyOverallCardsByTeam$Yellow.y + italyOverallCardsByTeam$Red.y + italyOverallCardsByTeam$Red.x
+
+### Games played ###
+
+homeClubGamesPlayed <- aggregate(AwayTeam ~ HomeTeam, data=italyGamesWithCards, FUN = length)
+awayClubGamesPlayed <- aggregate(HomeTeam ~ AwayTeam, data=italyGamesWithCards, FUN = length)
+
+homeClubGamesPlayed <- rename(homeClubGamesPlayed, c("HomeTeam"="Team", "AwayTeam"="Games"))
+awayClubGamesPlayed <- rename(awayClubGamesPlayed, c("AwayTeam"="Team", "HomeTeam"="Games"))
+
+allClubsGamesPlayed <- merge(homeClubGamesPlayed, awayClubGamesPlayed, by=c("Team"))
+
+italyOverallCardsByTeam <- merge(italyOverallCardsByTeam, allClubsGamesPlayed, by=c("Team"))
+
+yellowsPerGame <- c("YellowsPerGame")
+redsPerGame <- c("RedsPerGame")
+
+italyOverallCardsByTeam[,yellowsPerGame] <- (italyOverallCardsByTeam$Yellow.x + italyOverallCardsByTeam$Yellow.y)/(italyOverallCardsByTeam$Games.x+italyOverallCardsByTeam$Games.y) 
+italyOverallCardsByTeam[,redsPerGame] <- (italyOverallCardsByTeam$Red.x + italyOverallCardsByTeam$Red.y)/(italyOverallCardsByTeam$Games.x+italyOverallCardsByTeam$Games.y) 
+
+### Yellows and reds per game on average in Italy ###
+
+italyMeanYellowsPerGame = mean(italyOverallCardsByTeam$YellowsPerGame)
+italyMeanRedsPerGame = mean(italyOverallCardsByTeam$RedsPerGame)
+
+italyOverallCardsByTeam
+
+
+
+
+## Spain ## 
+
+homeYellow <- aggregate(HY~HomeTeam, data=spainGamesWithCards, FUN=sum)
+homeRed <- aggregate(HR~HomeTeam, data=spainGamesWithCards, FUN=sum)
+awayYellow <- aggregate(AY~AwayTeam, data=spainGamesWithCards, FUN=sum)
+awayRed <- aggregate(AR~AwayTeam, data=spainGamesWithCards, FUN=sum)
+
+spainHomeCards <- merge(homeYellow, homeRed)
+spainAwayCards <- merge(awayYellow, awayRed)
+
+spainHomeCards <- rename(spainHomeCards, c("HomeTeam"="Team", "HY"="Yellow", "HR"="Red"))
+spainAwayCards <- rename(spainAwayCards, c("AwayTeam"="Team", "AY"="Yellow", "AR"="Red"))
+
+spainOverallCardsByTeam <- merge(spainHomeCards, spainAwayCards, by=c("Team"))
+allCards <- c("AllCards")
+spainOverallCardsByTeam[,allCards] <- spainOverallCardsByTeam$Yellow.x + spainOverallCardsByTeam$Yellow.y + spainOverallCardsByTeam$Red.y + spainOverallCardsByTeam$Red.x
+
+### Games played ###
+
+homeClubGamesPlayed <- aggregate(AwayTeam ~ HomeTeam, data=spainGamesWithCards, FUN = length)
+awayClubGamesPlayed <- aggregate(HomeTeam ~ AwayTeam, data=spainGamesWithCards, FUN = length)
+
+homeClubGamesPlayed <- rename(homeClubGamesPlayed, c("HomeTeam"="Team", "AwayTeam"="Games"))
+awayClubGamesPlayed <- rename(awayClubGamesPlayed, c("AwayTeam"="Team", "HomeTeam"="Games"))
+
+allClubsGamesPlayed <- merge(homeClubGamesPlayed, awayClubGamesPlayed, by=c("Team"))
+
+spainOverallCardsByTeam <- merge(spainOverallCardsByTeam, allClubsGamesPlayed, by=c("Team"))
+
+yellowsPerGame <- c("YellowsPerGame")
+redsPerGame <- c("RedsPerGame")
+
+spainOverallCardsByTeam[,yellowsPerGame] <- (spainOverallCardsByTeam$Yellow.x + spainOverallCardsByTeam$Yellow.y)/(spainOverallCardsByTeam$Games.x+spainOverallCardsByTeam$Games.y) 
+spainOverallCardsByTeam[,redsPerGame] <- (spainOverallCardsByTeam$Red.x + spainOverallCardsByTeam$Red.y)/(spainOverallCardsByTeam$Games.x+spainOverallCardsByTeam$Games.y) 
+
+### Yellows and reds per game on average in Spain ###
+
+spainMeanYellowsPerGame = mean(spainOverallCardsByTeam$YellowsPerGame)
+spainMeanRedsPerGame = mean(spainOverallCardsByTeam$RedsPerGame)
+
+spainOverallCardsByTeam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
