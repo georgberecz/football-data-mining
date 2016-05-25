@@ -32,4 +32,30 @@ We chose this data because it is about the game we all love. The goals of this p
 
 ## Structure
 The analysis was done using R. The code is spread across .r files in the root folder of the project.
+#### 1. Teams aggressiveness across the countries based on the yellow and red cards given.
+
+First of all, in order to analyze teams agressiveness data needed to be sorted. The games and countries that didn't have any data about cards given were removed. 
+
+The following countries didn't have any information about cards given in their league games:
+ - Netherlands
+ - Portugal
+ - Turkey
+
+The following countries had data about the cards for at least one season:
+ - England
+ - France
+ - Germany
+ - Italy
+ - Spain
+
+Let's take a look into the results by country (NB: These are average results):
+
+##### England
+ - Home team yellow cards per game: 1.36
+ - Away team yellow cards per game: 1.77
+ - Home team red cards per game: 0.07
+ - Away team red cards per game: 0.1
+ - The most agressive team in England: Coventry - 2 yellows cards per game on average.
+ - The most calm team in England: Ipswitch - 0.94 yellow cards per game on average.
+
 ## Results
