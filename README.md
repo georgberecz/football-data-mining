@@ -63,31 +63,31 @@ Let's take a look into the results by country (NB: These are average results):
  - Away team yellow cards per game: 1.89
  - Home team red cards per game: 0.09
  - Away team red cards per game: 0.14
- - The most agressive team in England: Coventry - 2 yellows cards per game on average.
- - The most calm team in England: Ipswitch - 0.94 yellow cards per game on average.
+ - The most agressive team in France: Ajaccio GFCO - 2.34 yellows cards per game on average.
+ - The most calm team in France: Lorient - 1.34 yellow cards per game on average.
  
 ##### Germany
  - Home team yellow cards per game: 1.73
  - Away team yellow cards per game: 2.1
  - Home team red cards per game: 0.07
  - Away team red cards per game: 0.11
- - The most agressive team in England: Coventry -  yellows cards per game on average.
- - The most calm team in England: Ipswitch -  yellow cards per game on average.
+ - The most agressive team in Germany: Coventry -  yellows cards per game on average.
+ - The most calm team in Germany: Ipswitch -  yellow cards per game on average.
 
 ##### Italy
  - Home team yellow cards per game: 2.12
  - Away team yellow cards per game: 2.38
  - Home team red cards per game: 0.13
  - Away team red cards per game: 0.18
- - The most agressive team in England: Coventry - 2 yellows cards per game on average.
- - The most calm team in England: Ipswitch - 0.94 yellow cards per game on average.
+ - The most agressive team in Italy: Coventry - 2 yellows cards per game on average.
+ - The most calm team in Italy: Ipswitch - 0.94 yellow cards per game on average.
 
 ##### Spain
  - Home team yellow cards per game: 2.44
  - Away team yellow cards per game: 2.74
  - Home team red cards per game: 0.15
  - Away team red cards per game: 0.2
- - The most agressive team in England: Coventry - 2 yellows cards per game on average.
- - The most calm team in England: Ipswitch - 0.94 yellow cards per game on average.
+ - The most agressive team in Spain: Coventry - 2 yellows cards per game on average.
+ - The most calm team in Spain: Ipswitch - 0.94 yellow cards per game on average.
 
 ## Results
