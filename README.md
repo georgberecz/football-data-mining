@@ -87,7 +87,8 @@ Let's take a look into the results by country (NB: These are average results):
  - Away team yellow cards per game: 2.74
  - Home team red cards per game: 0.15
  - Away team red cards per game: 0.2
- - The most agressive team in Spain: Coventry - 2 yellows cards per game on average.
- - The most calm team in Spain: Ipswitch - 0.94 yellow cards per game on average.
+ - The most agressive team in Spain: Vallecano - 3.02 yellows cards per game on average.
+ - The most calm team in Spain: Barcelona - 1.84 yellow cards per game on average.
+ - It is also worth mentioning that there is a team in Spain called Xerex, who receives 0.37 red cards per game!
 
 ## Results
